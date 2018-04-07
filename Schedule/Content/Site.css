@@ -1,0 +1,35 @@
+﻿div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+body {
+    margin: auto;
+}
+
+nav {
+    vertical-align: top;
+    display: inline-block;
+    width: 175px;
+    /*border: 1px black solid;*/
+}
+
+input[type="number"] {
+    width: 100px;
+}
+
+form {
+    padding-top: 20px;
+}
+
+#tab-section {
+    width: 800px;
+}
+
+.tab-nav {
+    display: block;
+}
+
+.tab-devices {
+    width: 350px;
+}

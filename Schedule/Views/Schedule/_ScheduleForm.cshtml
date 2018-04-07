@@ -1,0 +1,48 @@
+﻿@model Schedule.Models.ScheduleViewModel
+
+@using (Ajax.BeginForm("SaveScheduleForm", "Schedule", new AjaxOptions { HttpMethod = "POST" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="tab-devices">
+        <h4>Пристрої</h4>
+        <div class="form-group row">
+            @Html.LabelFor(m => m.NumberOfDevices, "Кількість", new { @class = "col-sm-4 col-form-label" })
+            @Html.TextBoxFor(m => m.NumberOfDevices, new { @class = "form-control", type = "number" })
+
+            @*<label for="inputEmail3" class="col-sm-4 col-form-label">Кількість:</label>
+            <div class="col-sm-2">
+                <input type="number" class="form-control" id="inputEmail3" />
+            </div>*@
+        </div>
+        <div style="display:block">Тип:</div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+            <label class="form-check-label" style="margin-right:15px;" for="inlineRadio1">Ідентичний</label>
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <label class="form-check-label" for="inlineRadio2">Неідентичний</label>
+        </div>
+    </div>
+
+    <div class="tab-devices">
+        <h4>Палета</h4>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-7 col-form-label">Кількість рядів:</label>
+            <div class="col-sm-2">
+                <input type="number" class="form-control" id="inputEmail3" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-7 col-form-label">Кількість робіт у ряді:</label>
+            <div class="col-sm-2">
+                <input type="number" class="form-control" id="inputEmail3" />
+            </div>
+        </div>
+    </div>
+
+    <div style="display: block; padding-top:15px; padding-left:200px;">
+        <button type="button" class="btn btn-outline-success">Видалити</button>
+        <button type="submit" class="btn btn-success" style="margin-left:30px;">Розрахувати</button>
+    </div>
+}
+
+@*</form>*@
