@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Schedule.Models.Enums;
+using System.Collections.Generic;
 
 namespace Schedule.Models
 {
@@ -7,7 +8,7 @@ namespace Schedule.Models
         [Positive]
         public int NumberOfDevices { get; set; }
 
-        public bool IsIdentical { get; set; }
+        public DeviceType DeviceType { get; set; }
 
         public Dictionary<decimal, decimal> ProductivityCoefByDevice { get; set; }
 

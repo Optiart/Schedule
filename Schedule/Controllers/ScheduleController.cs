@@ -10,11 +10,28 @@ namespace Schedule.Controllers
     [RoutePrefix("Schedule")]
     public class ScheduleController : Controller
     {
+        [Route("Available/Tabs")]
+        [HttpGet]
+        [ChildActionOnly]
+        public PartialViewResult AvailableScheduleTabs()
+        {
+            int[] ids = new int[1] { 1 };
+            return PartialView("_AvailableScheduleTabs", ids);
+        }
+
         [Route("Available")]
         [HttpGet]
-        public PartialViewResult AvailableSchedule()
+        public PartialViewResult AvailableSchedule(int id = 1)
         {
-            return PartialView("_AvailableSchedule");
+            var model = new ScheduleViewModel
+            {
+                DeviceType = Models.Enums.DeviceType.Identical,
+                NumberOfWorkPerRow = 1,
+                NumberOfDevices = 2,
+                NumberOfPalleteRows = 3
+            };
+
+            return PartialView("_AvailableSchedule", model);
         }
 
         [Route("Form")]

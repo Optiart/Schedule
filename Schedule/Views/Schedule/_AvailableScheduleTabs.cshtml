@@ -1,0 +1,15 @@
+﻿@model int[]
+
+@{
+    int index = 1;
+}
+
+@foreach (int scheduleId in Model)
+{
+    @Ajax.ActionLink("Вкладка №" + index++, "AvailableSchedule", new { id = scheduleId, controller = "Schedule" }, new AjaxOptions
+    {
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "available-schedule"
+    }, new { @class = "nav-link nav-link-active" })
+}

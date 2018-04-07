@@ -7,34 +7,30 @@
         <h4>Пристрої</h4>
         <div class="form-group row">
             @Html.LabelFor(m => m.NumberOfDevices, "Кількість", new { @class = "col-sm-4 col-form-label" })
-            @Html.TextBoxFor(m => m.NumberOfDevices, new { @class = "form-control", type = "number" })
-
-            @*<label for="inputEmail3" class="col-sm-4 col-form-label">Кількість:</label>
-            <div class="col-sm-2">
-                <input type="number" class="form-control" id="inputEmail3" />
-            </div>*@
+            @Html.TextBoxFor(m => m.NumberOfDevices, new { @class = "form-control", type = "number", min = 0, value = "0"})
         </div>
         <div style="display:block">Тип:</div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-            <label class="form-check-label" style="margin-right:15px;" for="inlineRadio1">Ідентичний</label>
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-            <label class="form-check-label" for="inlineRadio2">Неідентичний</label>
+            @Html.RadioButtonFor(m => m.DeviceType, "Identical", new { id = "identical", @class = "form-check-input", @checked = true })
+            @Html.LabelFor(m => m.DeviceType, "Ідентичний", new { @for = "identical", @class = "form-check-label", style = "margin-right:15px;" })
+
+            @Html.RadioButtonFor(m => m.DeviceType, "Nonidentical", new { id = "non-identical", @class = "form-check-input" })
+            @Html.LabelFor(m => m.DeviceType, "Неідентичний", new { @for = "non-identical", @class = "form-check-label" })
         </div>
     </div>
 
     <div class="tab-devices">
         <h4>Палета</h4>
         <div class="form-group row">
-            <label for="inputEmail3" class="col-sm-7 col-form-label">Кількість рядів:</label>
+            @Html.LabelFor(m => m.NumberOfPalleteRows, "Кількість рядів:", new { @class = "col-sm-7 col-form-label" })
             <div class="col-sm-2">
-                <input type="number" class="form-control" id="inputEmail3" />
+                @Html.TextBoxFor(m => m.NumberOfPalleteRows, new { @class = "form-control", type = "number", min = 0, value = 0 })
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputEmail3" class="col-sm-7 col-form-label">Кількість робіт у ряді:</label>
+            @Html.LabelFor(m => m.NumberOfWorkPerRow, "Кількість робіт у ряді:", new { @class = "col-sm-7 col-form-label" })
             <div class="col-sm-2">
-                <input type="number" class="form-control" id="inputEmail3" />
+                @Html.TextBoxFor(m => m.NumberOfWorkPerRow, new { @class = "form-control", type = "number", min = 0, value = 0 })
             </div>
         </div>
     </div>
@@ -44,5 +40,3 @@
         <button type="submit" class="btn btn-success" style="margin-left:30px;">Розрахувати</button>
     </div>
 }
-
-@*</form>*@

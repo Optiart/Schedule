@@ -158,6 +158,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Enums\DeviceType.cs" />
     <Compile Include="Models\ScheduleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\PositiveAttribute.cs" />
@@ -245,6 +246,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Schedule\_ScheduleForm.cshtml" />
     <Content Include="Views\Schedule\_AvailableSchedule.cshtml" />
+    <Content Include="Views\Schedule\_AvailableScheduleTabs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
