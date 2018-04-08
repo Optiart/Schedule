@@ -1,4 +1,5 @@
-﻿div {
+﻿
+div {
     display: inline-block;
     vertical-align: top;
 }
@@ -32,4 +33,55 @@ form {
 
 .tab-devices {
     width: 350px;
+}
+
+/*key value form*/
+
+.key-value-section {
+    margin-top: 20px;
+    width: 300px;
+    height: 270px;
+    border: solid 0px #000000;
+    overflow-y: auto;
+}
+
+.key-value-section-header {
+    display: block;
+    margin: 0 auto;
+}
+
+.key-value-section-header-padding {
+    margin-left: 41px !important;
+}
+
+.key-value-section-header-col {
+    display: inline-block;
+    width: 60px;
+    margin-left: 15px;
+}
+
+.key-value-div {
+    display: block;
+    padding-top: 5px;
+    width: 75%;
+    margin: 0 auto;
+}
+
+    .key-value-div input[type="text"] {
+        height: 35px;
+        width: 70px;
+        margin-left: 5px;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid #000000;
+        text-align: center;
+    }
+
+    .key-value-div label {
+        text-align: center;
+        width: 70px;
+    }
+
+.disable {
+    display: none !important;
 }

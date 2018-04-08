@@ -1,13 +1,11 @@
-﻿@model Schedule.Models.ScheduleViewModel
+﻿@model ScheduleViewModel
 
-@using (Ajax.BeginForm("SaveScheduleForm", "Schedule", new AjaxOptions { HttpMethod = "POST" }))
-{
-    @Html.AntiForgeryToken()
+<form id="form-schedule">
     <div class="tab-devices">
         <h4>Пристрої</h4>
         <div class="form-group row">
             @Html.LabelFor(m => m.NumberOfDevices, "Кількість", new { @class = "col-sm-4 col-form-label" })
-            @Html.TextBoxFor(m => m.NumberOfDevices, new { @class = "form-control", type = "number", min = 0, value = "0"})
+            @Html.TextBoxFor(m => m.NumberOfDevices, new { @class = "form-control", type = "number", min = 0, Value = 0 })
         </div>
         <div style="display:block">Тип:</div>
         <div class="form-check form-check-inline">
@@ -17,6 +15,7 @@
             @Html.RadioButtonFor(m => m.DeviceType, "Nonidentical", new { id = "non-identical", @class = "form-check-input" })
             @Html.LabelFor(m => m.DeviceType, "Неідентичний", new { @for = "non-identical", @class = "form-check-label" })
         </div>
+        @{ Html.RenderPartial("_KeyValueForm", FormType.Device); }
     </div>
 
     <div class="tab-devices">
@@ -24,19 +23,143 @@
         <div class="form-group row">
             @Html.LabelFor(m => m.NumberOfPalleteRows, "Кількість рядів:", new { @class = "col-sm-7 col-form-label" })
             <div class="col-sm-2">
-                @Html.TextBoxFor(m => m.NumberOfPalleteRows, new { @class = "form-control", type = "number", min = 0, value = 0 })
+                @Html.TextBoxFor(m => m.NumberOfPalleteRows, new { @class = "form-control", type = "number", min = 0, Value = 0 })
             </div>
         </div>
         <div class="form-group row">
             @Html.LabelFor(m => m.NumberOfWorkPerRow, "Кількість робіт у ряді:", new { @class = "col-sm-7 col-form-label" })
             <div class="col-sm-2">
-                @Html.TextBoxFor(m => m.NumberOfWorkPerRow, new { @class = "form-control", type = "number", min = 0, value = 0 })
+                @Html.TextBoxFor(m => m.NumberOfWorkPerRow, new { @class = "form-control", type = "number", min = 0, Value = 0 })
             </div>
         </div>
+        @{ Html.RenderPartial("_KeyValueForm", FormType.Pallete); }
     </div>
 
     <div style="display: block; padding-top:15px; padding-left:200px;">
-        <button type="button" class="btn btn-outline-success">Видалити</button>
-        <button type="submit" class="btn btn-success" style="margin-left:30px;">Розрахувати</button>
+        <button id="btn-clear" type="button" class="btn btn-outline-success">Очистити</button>
+        <button id="form-schedule-submit" type="submit" class="btn btn-success" style="margin-left:30px;">Розрахувати</button>
     </div>
-}
+</form>
+
+<script type="text/javascript">
+    $("#non-identical").click(function () {
+        $("#@FormType.Device").removeClass("disable");
+    });
+
+    $("#identical").click(function () {
+        $("#@FormType.Device").addClass("disable");
+    });
+
+    var deviceCount = 0;
+    $("#NumberOfDevices").bind("keyup click", function () {
+        var val = $("#NumberOfDevices").val();
+        if (deviceCount !== val) {
+            deviceCount = val;
+            renderDeviceRows(deviceCount);
+        }
+    });
+
+    var previousPalleteCount = 0;
+    var previousWorkCount = 0;
+
+    $("#NumberOfPalleteRows").bind("keyup click", function () {
+        var numberOfPalletes = $("#NumberOfPalleteRows").val();
+        var numberOfWork = $("#NumberOfWorkPerRow").val();
+
+        if (numberOfWork == 0) {
+            $("#Pallete-fields").empty();
+            return;
+        }
+
+        if (previousPalleteCount !== numberOfPalletes) {
+            previousPalleteCount = numberOfPalletes;
+            renderPalleteRows(numberOfPalletes, numberOfWork);
+        }
+    });
+
+    $("#NumberOfWorkPerRow").bind('keyup click', function () {
+        var numberOfPalletes = $("#NumberOfPalleteRows").val();
+        var numberOfWork = $("#NumberOfWorkPerRow").val();
+
+        if (numberOfPalletes == 0) {
+            $("#Pallete-fields").empty();
+            return;
+        }
+
+        if (previousWorkCount !== numberOfWork) {
+            previousWorkCount = numberOfWork;
+            renderPalleteRows(numberOfPalletes, numberOfWork);
+        }
+    });
+
+    function renderDeviceRows(count) {
+        $("#Device-fields").empty();
+
+        for (var row = 1; row <= count; row++) {
+            var form =
+                `<div class="key-value-div">` +
+                `<label for="ProductivityCoefByDevice${row}">${row} </label>` +
+                `<input type="text" id="ProductivityCoefByDevice${row}" />` +
+                '</div>';
+
+            $("#Device-fields").append(form);
+        }
+    }
+
+    function renderPalleteRows(palleteCount, workCount) {
+        $("#Pallete-fields").empty();
+
+        for (var row = 0; row < palleteCount; row++) {
+            for (var work = 0; work < workCount; work++) {
+                var form =
+                    `<div class="key-value-div">` +
+                    `<label for="DurationByWork${row}${work}">${row+1}.${work+1}</label>` +
+                    `<input type="text" id="DurationByWork${row}${work}"/>` +
+                    '</div>';
+
+                $("#Pallete-fields").append(form);
+            }
+        }
+    }
+
+    $("#form-schedule-submit").click(function (e) {
+        e.preventDefault();
+
+        var scheduleForm = {};
+        scheduleForm.NumberOfDevices = $("#NumberOfDevices").val();
+        scheduleForm.DeviceType = $('input[name=DeviceType]:checked').val();
+        scheduleForm.DeviceProductivities = [];
+
+        if (scheduleForm.DeviceType == "Nonidentical") {
+            $("#Device-fields input[type=text]").each(function () {
+                scheduleForm.DeviceProductivities.push(this.value);
+            })
+        }
+
+        scheduleForm.NumberOfPalleteRows = $("#NumberOfPalleteRows").val();
+        scheduleForm.NumberOfWorkPerRow = $("#NumberOfWorkPerRow").val();
+
+        scheduleForm.DurationByWork = [[], []];
+        if (scheduleForm.NumberOfPalleteRows != 0 && scheduleForm.NumberOfWorkPerRow != 0) {
+            var index = 0;
+            for (var row = 0; row < scheduleForm.NumberOfPalleteRows; row++) {
+                for (var col = 0; col < scheduleForm.NumberOfWorkPerRow; col++) {
+                    var id = `#DurationByWork${row}${col}`;
+                    console.log(id);
+                    scheduleForm.DurationByWork[row][col] = $(id).val();
+                }
+            }
+
+        }
+
+        post("api/Schedule/Form/Save", JSON.stringify(scheduleForm));
+    });
+
+    $("#btn-clear").click(function () {
+        $("#form-schedule")[0].reset();
+        $('input[name=DeviceType]')[0].checked = true;
+        $("#Device-fields").empty();
+        $("#Pallete-fields").empty();
+    });
+
+</script>

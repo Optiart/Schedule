@@ -1,13 +1,11 @@
 ﻿function post(url, data) {
-
-	var jsonData = JSON.stringify(data);
-
 	$.ajax({
 		type: "POST",
 		url: url,
-		contentType: "application/json; charset=utf-8",
-		data: jsonData,
-		dataType: "json",
+        //contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        contentType: 'application/json; charset=utf-8',
+        data: data,
+        dataType: "JSON",
 		success: function (content) {
 			console.log(content);
 		}

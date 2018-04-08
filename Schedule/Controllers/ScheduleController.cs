@@ -40,19 +40,5 @@ namespace Schedule.Controllers
         {
             return PartialView("_ScheduleForm");
         }
-
-        [Route("Form/Save")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public JsonResult SaveScheduleForm(ScheduleViewModel scheduleModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Json(new { message = "invalid" }, JsonRequestBehavior.AllowGet);
-            }
-
-
-            return null;
-        }
     }
 }

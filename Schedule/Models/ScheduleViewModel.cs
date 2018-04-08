@@ -1,16 +1,17 @@
 ﻿using Schedule.Models.Enums;
-using System.Collections.Generic;
 
 namespace Schedule.Models
 {
     public class ScheduleViewModel
     {
+        public int Id { get; set; }
+
         [Positive]
         public int NumberOfDevices { get; set; }
 
         public DeviceType DeviceType { get; set; }
 
-        public Dictionary<decimal, decimal> ProductivityCoefByDevice { get; set; }
+        public decimal[] DeviceProductivities { get; set; }
 
         [Positive]
         public int NumberOfPalleteRows { get; set; }
@@ -18,6 +19,6 @@ namespace Schedule.Models
         [Positive]
         public int NumberOfWorkPerRow { get; set; }
 
-        public Dictionary<decimal, decimal> DurationByWork { get; set; }
+        public decimal[,] DurationByWork { get; set; }
     }
 }

@@ -1,0 +1,16 @@
+﻿@model FormType
+
+@{
+    string key = Model == FormType.Device ? "Пристрій" : "Палета";
+    string value = Model == FormType.Device ? "Прод" : "Час";
+}
+
+<div id="@Model" class="key-value-section @(Model == FormType.Device ? "disable" : "")">
+    <div class="key-value-section-header">
+        <div class="key-value-section-header-padding" style="margin-left:41px">@key</div>
+        <div class="key-value-section-header-col">@value</div>
+    </div>
+    <div id="@Model-fields" style="display: block">
+
+    </div>
+</div>
