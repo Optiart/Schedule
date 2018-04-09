@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Results]
+(
+	id INT PRIMARY KEY,
+	tab_id INT NOT NULL,
+	result VARCHAR(5096) NOT NULL,
+
+	CONSTRAINT FK_Results_tab FOREIGN KEY (tab_id) REFERENCES Tabs(id) ON DELETE CASCADE
+);
+GO

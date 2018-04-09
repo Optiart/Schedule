@@ -1,8 +1,4 @@
 ﻿using Schedule.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Schedule.Controllers
@@ -23,7 +19,7 @@ namespace Schedule.Controllers
         [HttpGet]
         public PartialViewResult AvailableSchedule(int id = 1)
         {
-            var model = new ScheduleViewModel
+            var model = new TabViewModel
             {
                 DeviceType = Models.Enums.DeviceType.Identical,
                 NumberOfWorkPerRow = 1,

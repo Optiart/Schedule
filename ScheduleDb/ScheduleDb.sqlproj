@@ -58,4 +58,8 @@
   <ItemGroup>
     <Folder Include="Properties" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tabs.sql" />
+    <Build Include="Results.sql" />
+  </ItemGroup>
 </Project>

@@ -1,7 +1,4 @@
 ﻿using Schedule.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -13,8 +10,7 @@ namespace Schedule.Controllers
     {
         [Route("Form/Save")]
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IHttpActionResult SaveScheduleForm(ScheduleViewModel scheduleModel)
+        public IHttpActionResult SaveScheduleForm(TabViewModel scheduleModel)
         {
             if (!ModelState.IsValid)
             {

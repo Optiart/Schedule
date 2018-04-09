@@ -2,7 +2,7 @@
 
 namespace Schedule.Models
 {
-    public class ScheduleViewModel
+    public class TabViewModel
     {
         public int Id { get; set; }
 
