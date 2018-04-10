@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Results]
 (
-	id INT PRIMARY KEY,
+	id INT PRIMARY KEY IDENTITY(1,1),
 	tab_id INT NOT NULL,
 	result VARCHAR(5096) NOT NULL,
 

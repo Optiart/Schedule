@@ -1,5 +1,6 @@
-﻿@model ScheduleViewModel
+﻿@model TabViewModel
 
+<div id="result-message"></div>
 <form id="form-schedule">
     <div class="tab-devices">
         <h4>Пристрої</h4>
@@ -139,27 +140,52 @@
         scheduleForm.NumberOfPalleteRows = $("#NumberOfPalleteRows").val();
         scheduleForm.NumberOfWorkPerRow = $("#NumberOfWorkPerRow").val();
 
-        scheduleForm.DurationByWork = [[], []];
+        scheduleForm.DurationByWork = [];
         if (scheduleForm.NumberOfPalleteRows != 0 && scheduleForm.NumberOfWorkPerRow != 0) {
-            var index = 0;
             for (var row = 0; row < scheduleForm.NumberOfPalleteRows; row++) {
+                scheduleForm.DurationByWork.push([]);
                 for (var col = 0; col < scheduleForm.NumberOfWorkPerRow; col++) {
                     var id = `#DurationByWork${row}${col}`;
-                    console.log(id);
                     scheduleForm.DurationByWork[row][col] = $(id).val();
+                    //scheduleForm.DurationByWork[row].push([$(id).val()]);
+                    console.log(scheduleForm.DurationByWork);
                 }
             }
 
         }
 
-        post("api/Schedule/Form/Save", JSON.stringify(scheduleForm));
+        post(
+            "api/Schedule/Tab/Save",
+            scheduleForm,
+            addTablSuccessCallBack,
+            addTabErrorCallBack);
     });
 
-    $("#btn-clear").click(function () {
+    var addTablSuccessCallBack = function (content) {
+        changeResultMessage("alert-success", "Розрахунок проведено й дані успішно збережені");
+        clearForm();
+    }
+
+    var addTabErrorCallBack = function (content) {
+        changeResultMessage("alert-danger", "Сталася помилка при збережені даних: " + content.statusText);
+    }
+
+    function changeResultMessage(classToAdd, tagText) {
+        $("#result-message").removeClass();
+        $("#result-message").addClass("alert").addClass(classToAdd);
+        $("#result-message").html(tagText);
+    }
+
+    function clearForm() {
         $("#form-schedule")[0].reset();
         $('input[name=DeviceType]')[0].checked = true;
         $("#Device-fields").empty();
         $("#Pallete-fields").empty();
+    }
+
+    $("#btn-clear").click(function () {
+        clearForm();
+        $("#result-message").addClass("disable");
     });
 
 </script>

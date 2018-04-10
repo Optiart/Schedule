@@ -255,8 +255,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Schedule\_ScheduleForm.cshtml" />
-    <Content Include="Views\Schedule\_AvailableSchedule.cshtml" />
-    <Content Include="Views\Schedule\_AvailableScheduleTabs.cshtml" />
+    <Content Include="Views\Schedule\AvailableSchedule.cshtml" />
     <Content Include="Views\Schedule\_KeyValueForm.cshtml" />
   </ItemGroup>
   <ItemGroup>

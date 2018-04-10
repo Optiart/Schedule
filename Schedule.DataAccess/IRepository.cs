@@ -6,7 +6,7 @@
 
         void Save(params Tabs[] tabs);
 
-        void Delete(params Tabs[] tabs);
+        void Delete(int tab);
 
         void Update(Tabs tab);
     }

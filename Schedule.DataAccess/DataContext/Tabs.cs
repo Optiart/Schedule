@@ -12,7 +12,7 @@ namespace Schedule.DataAccess
             Results = new HashSet<Results>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         public int number_of_devices { get; set; }

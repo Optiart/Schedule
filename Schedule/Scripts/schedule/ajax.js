@@ -1,15 +1,34 @@
-﻿function post(url, data) {
-	$.ajax({
-		type: "POST",
-		url: url,
+﻿function post(url, data, successCallBack, errorCallBack) {
+
+    var json = JSON.stringify(data);
+    console.log(json);
+    $.ajax({
+        type: "POST",
+        url: url,
         //contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         contentType: 'application/json; charset=utf-8',
-        data: data,
+        data: json,
         dataType: "JSON",
-		success: function (content) {
-			console.log(content);
-		}
-	});
+        success: function (content) {
+            successCallBack(content);
+        },
+        error: function (content) {
+            errorCallBack(content);
+        }
+    });
+}
+
+function deleteVerb(url, successCallBack, errorCallBack) {
+    $.ajax({
+        type: "DELETE",
+        url: url,
+        success: function (content) {
+            successCallBack(content);
+        },
+        error: function (content) {
+            errorCallBack(content);
+        }
+    });
 }
 
 function get(url, toElementById) {

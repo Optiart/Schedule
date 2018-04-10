@@ -5,7 +5,7 @@ namespace Schedule.DataAccess
 
     public partial class Results
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         public int tab_id { get; set; }

@@ -34,5 +34,10 @@ namespace Schedule.Services
 
             _repository.Save(dto);
         }
+
+        public void Delete(int id)
+        {
+            _repository.Delete(id);
+        }
     }
 }

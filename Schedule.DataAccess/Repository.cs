@@ -22,11 +22,12 @@ namespace Schedule.DataAccess
             }
         }
 
-        public void Delete(params Tabs[] tabs)
+        public void Delete(int tabId)
         {
             using (var context = new ScheduleDbContext())
             {
-                context.Tabs.RemoveRange(tabs);
+                Tabs tab = context.Tabs.Find(tabId);
+                context.Tabs.Remove(tab);
                 context.SaveChanges();
             }
         }

@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Tabs]
 (
-	id INT PRIMARY KEY,
+	id INT PRIMARY KEY IDENTITY(1,1),
 	number_of_devices INT NOT NULL,
 	device_type TINYINT NOT NULL,
 	productivity VARCHAR(2048),

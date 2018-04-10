@@ -1,0 +1,112 @@
+﻿@model TabViewModel[]
+
+@{
+    Layout = null;
+    int index = 1;
+    bool firstTab = true;
+}
+
+<div id="result-message"></div>
+@if (Model == null || Model.Length == 0)
+{
+    <h2>Дані відсутні</h2>
+}
+else
+{
+    <div class="tab-nav">
+        <ul class="nav nav-tabs">
+            @foreach (var tab in Model)
+            {
+                <li id="nav-item-@tab.Id" class="nav-item">
+                    <a id="tab-@tab.Id" href="#" class="tab nav-link @(index == 1 ? "tab-active nav-link-active" : string.Empty)">Вкладка №@(index++)</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    foreach (var tab in Model)
+    {
+        <div id="div-tab-@tab.Id" class="@(firstTab ? string.Empty :"disable")">
+            @{ firstTab = false; }
+            <div class="tab-devices">
+                <h4>Пристрої</h4>
+                <div class="form-group row">
+                    @Html.LabelFor(m => tab.NumberOfDevices, "Кількість", new { @class = "col-sm-4 col-form-label" })
+                    @Html.DisplayFor(m => tab.NumberOfDevices, new { @class = "form-control" })
+                </div>
+                <div class="form-check form-check-inline">
+                    Тип: @Html.DisplayFor(m => tab.DeviceType, "Identical", new { @class = "form-check-input" })
+                </div>
+
+                @for (int i = 0; i < tab.DeviceProductivities.Length; i++)
+                {
+                    <div class="block">
+                        Пристрій @(i + 1): @tab.DeviceProductivities[i]
+                    </div>
+                }
+            </div>
+
+            <div class="tab-devices">
+                <h4>Палета</h4>
+                <div class="form-group row">
+                    @Html.LabelFor(m => tab.NumberOfPalleteRows, "Кількість рядів:", new { @class = "col-sm-7 col-form-label" })
+                    <div class="col-sm-2">
+                        @Html.DisplayFor(m => tab.NumberOfPalleteRows, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => tab.NumberOfWorkPerRow, "Кількість робіт у ряді:", new { @class = "col-sm-7 col-form-label" })
+                    <div class="col-sm-2">
+                        @Html.DisplayFor(m => tab.NumberOfWorkPerRow, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                @{
+                    int workIndex;
+                }
+
+                @for (int i = 0; i < tab.NumberOfPalleteRows; i++)
+                {
+                    { workIndex = 1; };
+                    for (int j = 0; j < tab.NumberOfWorkPerRow; j++)
+                    {
+                        <div class="block">
+                            Палета @(i + 1).@(workIndex++): @tab.DurationByWork[i, j]
+                        </div>
+                    }
+                }
+            </div>
+            <div class="block" style="text-align: center; margin-top: 40px">
+                <button id="btn-delete-tab-@tab.Id" data-id="@tab.Id" type="button" class="btn-delete-tab btn btn-danger">Видалити</button>
+            </div>
+        </div>
+    }
+}
+
+<script type="text/javascript">
+    $(".tab").click(function () {
+        var currentTabId = this.getAttribute("id");
+        var previousActiveTab = $(".tab-active")[0].id;
+
+        $("#" + previousActiveTab).removeClass("nav-link-active").removeClass("tab-active");
+        $("#div-" + previousActiveTab).addClass("disable");
+
+        $("#" + currentTabId).addClass("nav-link-active").addClass("tab-active");
+        $("#div-" + currentTabId).removeClass("disable");
+    });
+
+    $(".btn-delete-tab").click(function () {
+        var currentTab = this.getAttribute("id");
+        var tabToDelete = $("#" + currentTab).attr("data-id");
+
+        deleteVerb("api/Schedule/Tab/Delete/" + tabToDelete,
+            function (content) {
+                $("#nav-item-" + tabToDelete).addClass("disable");
+                $("#div-tab-" + tabToDelete).addClass("disable");
+            },
+            function (content) {
+                $("#result-message").addClass("alert").addClass("alert-danger");
+                $("#result-message").html("Сталася помилка при видаленні даних: " + content.statusText);
+            });
+    });
+</script>

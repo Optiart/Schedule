@@ -85,3 +85,12 @@ form {
 .disable {
     display: none !important;
 }
+
+.block {
+    display: block;
+}
+
+#result-message {
+    display: block;
+    text-align: center;
+}
