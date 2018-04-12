@@ -1,4 +1,4 @@
-﻿using Schedule.Models.Enums;
+﻿using Schedule.Domain.Models;
 
 namespace Schedule.Models
 {

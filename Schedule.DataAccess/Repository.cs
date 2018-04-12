@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Schedule.DataAccess
 {
-    public class Repository : IRepository
+    internal class Repository : IRepository
     {
         public Tabs[] GetAll()
         {

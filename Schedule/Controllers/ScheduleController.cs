@@ -1,5 +1,5 @@
 ﻿using Schedule.Models;
-using Schedule.Services;
+using Schedule.Domain;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -8,16 +8,16 @@ namespace Schedule.Controllers
     [RoutePrefix("Schedule")]
     public class ScheduleController : Controller
     {
-        private TabService _tabService;
+        private ITabService _tabService;
 
-        public ScheduleController()
+        public ScheduleController(ITabService tabService)
         {
-            _tabService = new TabService();
+            _tabService = tabService;
         }
 
         [Route("Available")]
         [HttpGet]
-        public ActionResult AvailableSchedule(int id = 1)
+        public ActionResult AvailableSchedule()
         {
             Tab[] tabs = _tabService.GetAll();
             TabViewModel[] tabsViewModel = tabs.Select(t => new TabViewModel(t)).ToArray();
@@ -30,6 +30,12 @@ namespace Schedule.Controllers
         public PartialViewResult ScheduleForm()
         {
             return PartialView("_ScheduleForm");
+        }
+
+        [Route("Result")]
+        public ActionResult Result()
+        {
+            return View();
         }
     }
 }

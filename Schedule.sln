@@ -9,6 +9,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ScheduleDb", "ScheduleDb\Sc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schedule.DataAccess", "Schedule.DataAccess\Schedule.DataAccess.csproj", "{16934895-39D8-4076-BD91-8590586B450A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schedule.Domain", "Schedule.Domain\Schedule.Domain.csproj", "{63778AEE-5495-4936-A377-85C886EEBEFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{16934895-39D8-4076-BD91-8590586B450A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16934895-39D8-4076-BD91-8590586B450A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16934895-39D8-4076-BD91-8590586B450A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63778AEE-5495-4936-A377-85C886EEBEFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63778AEE-5495-4936-A377-85C886EEBEFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63778AEE-5495-4936-A377-85C886EEBEFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63778AEE-5495-4936-A377-85C886EEBEFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

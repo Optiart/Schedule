@@ -1,5 +1,5 @@
 ﻿using Schedule.DataAccess;
-using Schedule.Models.Enums;
+using Schedule.Domain.Models;
 using Newtonsoft.Json;
 
 namespace Schedule.Models
@@ -19,6 +19,10 @@ namespace Schedule.Models
         public int NumberOfWorkPerRow { get; set; }
 
         public decimal[,] DurationByWork { get; set; }
+
+        public Tab()
+        {
+        }
 
         public Tab(Tabs dto)
         {

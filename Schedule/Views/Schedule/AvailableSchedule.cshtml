@@ -99,7 +99,7 @@ else
         var currentTab = this.getAttribute("id");
         var tabToDelete = $("#" + currentTab).attr("data-id");
 
-        deleteVerb("api/Schedule/Tab/Delete/" + tabToDelete,
+        deleteVerb("api/Tab/Delete/" + tabToDelete,
             function (content) {
                 $("#nav-item-" + tabToDelete).addClass("disable");
                 $("#div-tab-" + tabToDelete).addClass("disable");

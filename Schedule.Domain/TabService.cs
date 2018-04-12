@@ -3,15 +3,15 @@ using Newtonsoft.Json;
 using Schedule.DataAccess;
 using Schedule.Models;
 
-namespace Schedule.Services
+namespace Schedule.Domain
 {
-    public class TabService
+    internal class TabService : ITabService
     {
         private IRepository _repository;
 
-        public TabService()
+        public TabService(IRepository repository)
         {
-            _repository = new Repository();
+            _repository = repository;
         }
 
         public Tab[] GetAll()
@@ -20,7 +20,7 @@ namespace Schedule.Services
             return tabsDto.Select(t => new Tab(t)).ToArray();
         }
 
-        public void Save(TabViewModel tabModel)
+        public void Save(Tab tabModel)
         {
             var dto = new Tabs
             {
