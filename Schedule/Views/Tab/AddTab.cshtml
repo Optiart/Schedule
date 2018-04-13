@@ -1,5 +1,9 @@
 ﻿@model TabViewModel
 
+@{
+    ViewBag.Title = "Нові дані";
+}
+
 <div id="result-message"></div>
 <form id="form-schedule">
     <div class="tab-devices">
@@ -42,7 +46,9 @@
     </div>
 </form>
 
-<script type="text/javascript">
+@section scripts
+{
+    <script type="text/javascript">
     $("#non-identical").click(function () {
         $("#@FormType.Device").removeClass("disable");
     });
@@ -147,7 +153,6 @@
                 for (var col = 0; col < scheduleForm.NumberOfWorkPerRow; col++) {
                     var id = `#DurationByWork${row}${col}`;
                     scheduleForm.DurationByWork[row][col] = $(id).val();
-                    //scheduleForm.DurationByWork[row].push([$(id).val()]);
                     console.log(scheduleForm.DurationByWork);
                 }
             }
@@ -155,7 +160,7 @@
         }
 
         post(
-            "api/Tab/Save",
+            '@Url.HttpRouteUrl("SaveTabRoute", routeValues: null)',
             scheduleForm,
             addTablSuccessCallBack,
             addTabErrorCallBack);
@@ -188,4 +193,5 @@
         $("#result-message").addClass("disable");
     });
 
-</script>
+    </script>
+}

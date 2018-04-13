@@ -4,12 +4,10 @@ namespace Schedule.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpGet]
         [Route("")]
-        [Route("Home/Index")]
+        [Route("home/index")]
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
             return View();
         }
     }

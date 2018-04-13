@@ -1,0 +1,42 @@
+﻿@model ResultViewModel[]
+
+@{
+    ViewBag.Title = "Результати";
+    int index = 1;
+}
+
+@if (Model == null || Model.Length == 0)
+{
+    <h2>Дані відсутні</h2>
+}
+else
+{
+    <div class="tab-nav">
+        <ul class="nav nav-tabs">
+            @foreach (var result in Model)
+            {
+                <li id="nav-item-@result.Id" class="nav-item">
+                    <a id="tab-@result.Id" href="#" class="tab nav-link @(index == 1 ? "tab-active nav-link-active" : string.Empty)">Вкладка №@(index++)</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <!--Graphic-->
+
+    foreach (var resultTab in Model)
+    {
+
+        foreach (var kvp in resultTab.GraphData)
+        {
+            <div style="display: block">@kvp.Key
+                @foreach (var row in kvp.Value)
+                {
+                    <div style="width: @(row.Duration*30)px; text-align: center; height: 25px; background-color:aqua; border: solid 1px #000000">
+                        @row.PalleteWork
+                    </div>
+                }
+            </div>
+        }
+    }
+}

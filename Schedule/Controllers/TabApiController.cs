@@ -6,7 +6,7 @@ using System.Web.Http;
 
 namespace Schedule.Controllers
 {
-    [RoutePrefix("api/Tab")]
+    [RoutePrefix("api/tab")]
     public class TabApiController : ApiController
     {
         private ITabService _tabService;
@@ -16,9 +16,9 @@ namespace Schedule.Controllers
             _tabService = tabService;
         }
 
-        [Route("Save")]
+        [Route("save", Name = "SaveTabRoute")]
         [HttpPost]
-        public IHttpActionResult SaveScheduleForm(TabViewModel saveTabRequest)
+        public IHttpActionResult Save(TabViewModel saveTabRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -39,9 +39,9 @@ namespace Schedule.Controllers
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "success"));
         }
 
-        [Route("Delete/{id}")]
+        [Route("delete/{id}", Name = "DeleteTabRoute")]
         [HttpDelete]
-        public IHttpActionResult DeleteTab([FromUri] int id)
+        public IHttpActionResult Delete([FromUri] int id)
         {
             _tabService.Delete(id);
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "success"));

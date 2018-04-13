@@ -1,7 +1,7 @@
 ﻿@model TabViewModel[]
 
 @{
-    Layout = null;
+    ViewBag.Title = "Наявні дані";
     int index = 1;
     bool firstTab = true;
 }
@@ -77,36 +77,37 @@ else
                 }
             </div>
             <div class="block" style="text-align: center; margin-top: 40px">
-                <button id="btn-delete-tab-@tab.Id" data-id="@tab.Id" type="button" class="btn-delete-tab btn btn-danger">Видалити</button>
+                <button type="button" class="btn-delete-tab btn btn-danger" onclick="deleteTab('@(Url.HttpRouteUrl("DeleteTabRoute", routeValues: new { id = tab.Id }))', @tab.Id)">Видалити</button>
             </div>
         </div>
     }
 }
 
-<script type="text/javascript">
-    $(".tab").click(function () {
-        var currentTabId = this.getAttribute("id");
-        var previousActiveTab = $(".tab-active")[0].id;
+@section scripts
+{
+    <script type="text/javascript">
+        $(".tab").click(function () {
+            var currentTabId = this.getAttribute("id");
+            var previousActiveTab = $(".tab-active")[0].id;
 
-        $("#" + previousActiveTab).removeClass("nav-link-active").removeClass("tab-active");
-        $("#div-" + previousActiveTab).addClass("disable");
+            $("#" + previousActiveTab).removeClass("nav-link-active").removeClass("tab-active");
+            $("#div-" + previousActiveTab).addClass("disable");
 
-        $("#" + currentTabId).addClass("nav-link-active").addClass("tab-active");
-        $("#div-" + currentTabId).removeClass("disable");
-    });
+            $("#" + currentTabId).addClass("nav-link-active").addClass("tab-active");
+            $("#div-" + currentTabId).removeClass("disable");
+        });
 
-    $(".btn-delete-tab").click(function () {
-        var currentTab = this.getAttribute("id");
-        var tabToDelete = $("#" + currentTab).attr("data-id");
+        function deleteTab (url, tabId) {
+            deleteVerb(url,
+                function (content) {
+                    $("#nav-item-" + tabId).addClass("disable");
+                    $("#div-tab-" + tabId).addClass("disable");
+                },
+                function (content) {
+                    $("#result-message").addClass("alert").addClass("alert-danger");
+                    $("#result-message").html("Сталася помилка при видаленні даних: " + content.statusText);
+                });
+        }
 
-        deleteVerb("api/Tab/Delete/" + tabToDelete,
-            function (content) {
-                $("#nav-item-" + tabToDelete).addClass("disable");
-                $("#div-tab-" + tabToDelete).addClass("disable");
-            },
-            function (content) {
-                $("#result-message").addClass("alert").addClass("alert-danger");
-                $("#result-message").html("Сталася помилка при видаленні даних: " + content.statusText);
-            });
-    });
-</script>
+    </script>
+}

@@ -13,23 +13,13 @@
         <nav>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    @Ajax.ActionLink("Введення даних", "ScheduleForm", new { controller = "Schedule" }, new AjaxOptions
-                {
-                    HttpMethod = "GET",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "tab-section"
-                }, new { @class = "nav-link nav-link-active" })
+                    @Html.ActionLink("Введення даних", "AddTab", new { controller = "Tab" }, new { @class = "nav-link nav-link-active" })
                 </li>
                 <li class="nav-item">
-                    @Ajax.ActionLink("Наявні дані", "AvailableSchedule", new { controller = "Schedule" }, new AjaxOptions
-                {
-                    HttpMethod = "GET",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "tab-section"
-                }, new { @class = "nav-link nav-link-active" })
+                    @Html.ActionLink("Наявні дані", "AvailableTabs", new { controller = "Tab" }, new { @class = "nav-link nav-link-active" })
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Розрахунки</a>
+                    @Html.ActionLink("Розрахунки", "AvailableResults", new { controller = "Result" }, new { @class = "nav-link nav-link-active" })
                 </li>
             </ul>
         </nav>
@@ -44,9 +34,5 @@
     @Scripts.Render("~/bundles/scripts")
     @Scripts.Render("~/bundles/jquery-val")
     @RenderSection("scripts", required: false)
-
-    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>*@
 </body>
 </html>
