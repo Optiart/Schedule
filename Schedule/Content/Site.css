@@ -41,7 +41,7 @@ form {
     margin-top: 20px;
     width: 300px;
     height: 270px;
-    border: solid 0px #000000;
+    border: solid 0 #000000;
     overflow-y: auto;
 }
 
@@ -94,3 +94,64 @@ form {
     display: block;
     text-align: center;
 }
+
+
+/* Graph */
+
+.graph {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-top: 20px;
+}
+
+    .graph .device-id {
+        font-weight: bold;
+        width: 15px;
+    }
+
+    .graph .device-work {
+        display: block;
+    }
+
+    .graph .x-data {
+        font-size: 0;
+        white-space: nowrap;
+    }
+
+        .graph .x-data > div {
+            display: inline-block;
+            text-align: center;
+            height: 25px;
+            border-left: solid 1px #000000;
+            font-size: 14px;
+        }
+
+    .graph .y-margin {
+        height: 8px;
+        width: 16px;
+        border-right: solid 1px #000000;
+        display: block;
+    }
+
+    .graph .x {
+        font-size: 0;
+        margin-left: 15px;
+        white-space: nowrap;
+    }
+
+        .graph .x > div {
+            display: inline-block;
+            border-bottom: solid 1px #000000;
+            width: 30px;
+        }
+
+    .graph .x-arrow {
+        font-size: 19px;
+        color: black;
+        position: relative;
+        border: none !important;
+        top: -16px;
+        left: -3px
+    }

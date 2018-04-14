@@ -22,21 +22,35 @@ else
         </ul>
     </div>
 
-    <!--Graphic-->
+    <!--Grap section-->
 
-    foreach (var resultTab in Model)
-    {
-
-        foreach (var kvp in resultTab.GraphData)
+    <div class="graph">
+        @foreach (var resultTab in Model)
         {
-            <div style="display: block">@kvp.Key
-                @foreach (var row in kvp.Value)
-                {
-                    <div style="width: @(row.Duration*30)px; text-align: center; height: 25px; background-color:aqua; border: solid 1px #000000">
-                        @row.PalleteWork
+            foreach (var kvp in resultTab.GraphData)
+            {
+                <div class="device-work">
+                    <div class="device-id">
+                        @kvp.Key
+                    </div><div class="x-data">
+                        @foreach (var row in kvp.Value)
+                        {
+                            string width = (row.Duration * 30).ToString() + "px";
+                            string color = resultTab.ColorByPalleteWork[(int)row.PalleteWork];
+                            <div style="width: @width; background-color: @color">@row.PalleteWork</div>
+                        }
                     </div>
+                    <div class="y-margin"></div>
+                </div>
+            }
+            <div class="y-margin"></div><div class="y-margin"></div>
+            <div class="x">
+                @for (int i = 1; i <= resultTab.MaxDuration; i++)
+                {
+                    <div></div>
                 }
+                <div class="x-arrow">&#x21FE; t</div>
             </div>
         }
-    }
+    </div>
 }

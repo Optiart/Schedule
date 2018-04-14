@@ -36,7 +36,7 @@ namespace Schedule.Controllers
                                 },
                                 new DeviceGraphRow
                                 {
-                                    PalleteWork = 1.2m,
+                                    PalleteWork = 2.1m,
                                     Duration = 5
                                 }
                             }
@@ -50,8 +50,32 @@ namespace Schedule.Controllers
                                 },
                                 new DeviceGraphRow
                                 {
-                                    PalleteWork = 2.2m,
+                                    PalleteWork = 1.2m,
                                     Duration = 2
+                                },
+                                new DeviceGraphRow
+                                {
+                                    PalleteWork = 3.1m,
+                                    Duration = 2
+                                }
+                            }
+                        },
+                        { 3, new DeviceGraphRow[]
+                            {
+                                new DeviceGraphRow
+                                {
+                                    PalleteWork = 4.1m,
+                                    Duration = 9
+                                },
+                                new DeviceGraphRow
+                                {
+                                    PalleteWork = 5.1m,
+                                    Duration = 7
+                                },
+                                new DeviceGraphRow
+                                {
+                                    PalleteWork = 5.2m,
+                                    Duration = 12
                                 }
                             }
                         }
