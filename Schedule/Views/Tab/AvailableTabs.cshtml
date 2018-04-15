@@ -86,6 +86,8 @@ else
 @section scripts
 {
     <script type="text/javascript">
+        $(activateNavLink('nav-availableTabs'));
+
         $(".tab").click(function () {
             var currentTabId = this.getAttribute("id");
             var previousActiveTab = $(".tab-active")[0].id;
@@ -97,7 +99,7 @@ else
             $("#div-" + currentTabId).removeClass("disable");
         });
 
-        function deleteTab (url, tabId) {
+        function deleteTab(url, tabId) {
             deleteVerb(url,
                 function (content) {
                     $("#nav-item-" + tabId).addClass("disable");

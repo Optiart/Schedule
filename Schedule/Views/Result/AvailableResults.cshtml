@@ -22,7 +22,7 @@ else
         </ul>
     </div>
 
-    <!--Grap section-->
+    <!--Graph section-->
 
     <div class="graph">
         @foreach (var resultTab in Model)
@@ -53,4 +53,11 @@ else
             </div>
         }
     </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(activateNavLink('nav-availableResults'));
+    </script>
 }

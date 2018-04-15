@@ -1,18 +1,28 @@
-﻿
-div {
-    display: inline-block;
-    vertical-align: top;
+﻿/* Definitions */
+
+@font-face {
+    font-family: 'Roboto-Light';
+    src: url('../Font/Roboto/Roboto-Light.ttf') format('truetype');
 }
+
+/* Global */
 
 body {
     margin: auto;
+    font-family: 'Roboto-Light';
+    background-color: #f7f7f7;
 }
 
 nav {
     vertical-align: top;
     display: inline-block;
-    width: 175px;
-    /*border: 1px black solid;*/
+    border-right: 1px #007bff solid;
+    padding-right: 15px;
+}
+
+div {
+    display: inline-block;
+    vertical-align: top;
 }
 
 input[type="number"] {
@@ -23,9 +33,28 @@ form {
     padding-top: 20px;
 }
 
-#tab-section {
-    width: 800px;
+/* Logo */
+
+.logo {
+    margin: 0 auto;
+    display: block;
+    height: 100px;
+    width: 1110px;
+    padding-bottom: 20px;
+    background: url('../../Images/logo.png') no-repeat;
+    background-size: 100%;
 }
+
+    .logo > div {
+        padding-top: 6px;
+        text-align: center;
+        font-size: 24px;
+    }
+
+    #tab-section {
+        width: 800px;
+        margin-left: 15px;
+    }
 
 .tab-nav {
     display: block;
@@ -95,6 +124,11 @@ form {
     text-align: center;
 }
 
+/* Layout */
+
+.main {
+
+}
 
 /* Graph */
 
@@ -124,7 +158,7 @@ form {
             display: inline-block;
             text-align: center;
             height: 25px;
-            border-left: solid 1px #000000;
+            border: solid 1px #000000;
             font-size: 14px;
         }
 
@@ -153,5 +187,5 @@ form {
         position: relative;
         border: none !important;
         top: -16px;
-        left: -3px
+        left: -3px;
     }

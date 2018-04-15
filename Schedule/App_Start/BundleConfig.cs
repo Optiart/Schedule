@@ -13,7 +13,8 @@ namespace Schedule
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
                         "~/Scripts/schedule/ajax.js",
-                        "~/Scripts/schedule/actions.js"));
+                        "~/Scripts/schedule/actions.js",
+                        "~/Scripts/schedule/common.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-val").Include(
                         "~/Scripts/jquery.validate.js",

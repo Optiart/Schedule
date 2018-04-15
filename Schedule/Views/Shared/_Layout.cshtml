@@ -8,18 +8,25 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+
+    <div class="logo">
+        <div>Складання розкладу виконання робіт з відношенням передування паралельними пристроями за критерієм мінімізації загального часу виконання робіт</div>
+    </div>
+
     <div class="container">
-        <h2>Розклад</h2>
         <nav>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    @Html.ActionLink("Введення даних", "AddTab", new { controller = "Tab" }, new { @class = "nav-link nav-link-active" })
+            <ul class="nav nav-pills flex-column">
+                <li>
+                    @Html.ActionLink("Головна сторінка", "Index", new { controller = "Home" }, new { @class = "nav-item nav-link", id = "nav-index" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Наявні дані", "AvailableTabs", new { controller = "Tab" }, new { @class = "nav-link nav-link-active" })
+                    @Html.ActionLink("Введення даних", "AddTab", new { controller = "Tab" }, new { @class = "nav-item nav-link", id = "nav-addTab" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Розрахунки", "AvailableResults", new { controller = "Result" }, new { @class = "nav-link nav-link-active" })
+                    @Html.ActionLink("Наявні дані", "AvailableTabs", new { controller = "Tab" }, new { @class = "nav-item nav-link", id = "nav-availableTabs" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Розрахунки", "AvailableResults", new { controller = "Result" }, new { @class = "nav-item nav-link", id = "nav-availableResults" })
                 </li>
             </ul>
         </nav>
