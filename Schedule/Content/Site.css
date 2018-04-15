@@ -40,7 +40,7 @@ form {
     display: block;
     height: 100px;
     width: 1110px;
-    padding-bottom: 20px;
+    margin-bottom: 30px;
     background: url('../../Images/logo.png') no-repeat;
     background-size: 100%;
 }
@@ -51,10 +51,10 @@ form {
         font-size: 24px;
     }
 
-    #tab-section {
-        width: 800px;
-        margin-left: 15px;
-    }
+#tab-section {
+    width: 800px;
+    margin-left: 15px;
+}
 
 .tab-nav {
     display: block;
@@ -127,7 +127,6 @@ form {
 /* Layout */
 
 .main {
-
 }
 
 /* Graph */
