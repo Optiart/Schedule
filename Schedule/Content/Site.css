@@ -15,9 +15,11 @@ body {
 
 nav {
     vertical-align: top;
-    display: inline-block;
-    border-right: 1px #007bff solid;
+    display: block;
+    /*border-right: 3px #FFFFFF solid;*/
     padding-right: 15px;
+    width: 600px;
+    margin: 0 auto;
 }
 
 div {
@@ -40,7 +42,7 @@ form {
     display: block;
     height: 100px;
     width: 1110px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     background: url('../../Images/logo.png') no-repeat;
     background-size: 100%;
 }
@@ -51,9 +53,13 @@ form {
         font-size: 24px;
     }
 
-#tab-section {
-    width: 800px;
-    margin-left: 15px;
+/* Tab */
+
+.tab-section {
+    display: block;
+    width: 1070px;
+    margin: 0 auto;
+    margin-top: 20px
 }
 
 .tab-nav {
@@ -122,11 +128,6 @@ form {
 #result-message {
     display: block;
     text-align: center;
-}
-
-/* Layout */
-
-.main {
 }
 
 /* Graph */

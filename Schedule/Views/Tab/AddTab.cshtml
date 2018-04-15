@@ -10,7 +10,7 @@
         <h4>Пристрої</h4>
         <div class="form-group row">
             @Html.LabelFor(m => m.NumberOfDevices, "Кількість", new { @class = "col-sm-4 col-form-label" })
-            @Html.TextBoxFor(m => m.NumberOfDevices, new { @class = "form-control", type = "number", min = 2, max = 10, Value = 2 })
+            @Html.TextBoxFor(m => m.NumberOfDevices, new { @class = "form-control", type = "number", min = 2, max = 10, Value = 2, onKeyDown = "filterInteger(this)", onKeyUp = "filterMaxValue(this, 10)", onfocusout = "filterMin(this, 2)" })
         </div>
         <div style="display:block">Тип:</div>
         <div class="form-check form-check-inline">
@@ -28,13 +28,13 @@
         <div class="form-group row">
             @Html.LabelFor(m => m.NumberOfPalleteRows, "Кількість рядів:", new { @class = "col-sm-7 col-form-label" })
             <div class="col-sm-2">
-                @Html.TextBoxFor(m => m.NumberOfPalleteRows, new { @class = "form-control", type = "number", min = 2, max = 20, Value = 0 })
+                @Html.TextBoxFor(m => m.NumberOfPalleteRows, new { @class = "form-control", type = "number", min = 2, max = 20, Value = 2, onKeyDown = "filterInteger(this)", onKeyUp = "filterMaxValue(this, 20)", onfocusout = "filterMin(this, 2)" })
             </div>
         </div>
         <div class="form-group row">
             @Html.LabelFor(m => m.NumberOfWorkPerRow, "Кількість робіт у ряді:", new { @class = "col-sm-7 col-form-label" })
             <div class="col-sm-2">
-                @Html.TextBoxFor(m => m.NumberOfWorkPerRow, new { @class = "form-control", type = "number", min = 0, Value = 0 })
+                @Html.TextBoxFor(m => m.NumberOfWorkPerRow, new { @class = "form-control", type = "number", min = 2, max = 20, Value = 2, onKeyDown = "filterInteger(this)", onKeyUp = "filterMaxValue(this, 20)", onfocusout = "filterMin(this, 2)" })
             </div>
         </div>
         @{ Html.RenderPartial("_KeyValueForm", FormType.Pallete); }
@@ -108,7 +108,7 @@
             var form =
                 `<div class="key-value-div">` +
                 `<label for="ProductivityCoefByDevice${row}">${row} </label>` +
-                `<input type="text" id="ProductivityCoefByDevice${row}" pattern="[0-9]" value="1" />` +
+                `<input type="text" id="ProductivityCoefByDevice${row}" value="1" onKeyDown = "filterDecimal(this)", onKeyUp = "filterMaxValue(this, 5)", onfocusout = "filterMin(this, 1)" />` +
                 '</div>';
 
             $("#Device-fields").append(form);
@@ -123,13 +123,64 @@
                 var form =
                     `<div class="key-value-div">` +
                     `<label for="DurationByWork${row}${work}">${row+1}.${work+1}</label>` +
-                    `<input type="text" id="DurationByWork${row}${work}"/>` +
+                    `<input type="text" id="DurationByWork${row}${work}" value="1" onKeyDown="filterInteger(this)" onKeyUp="filterMaxValue(this, 30)" onfocusout="filterMin(this, 0)"/>` +
                     '</div>';
 
                 $("#Pallete-fields").append(form);
             }
         }
     }
+
+        function filterInteger(input) {
+            var e = event || window.event;
+            var key = e.keyCode || e.which;
+
+            if (key == 8 || key == 91 || key == 92) {
+                return;
+            }
+
+            if (key < 48 || key > 57) { //if it is not a number ascii code
+                //Prevent default action, which is inserting character
+                if (e.preventDefault) e.preventDefault(); //normal browsers
+            }
+        }
+
+        function filterDecimal(input) {
+            var e = event || window.event;
+            var key = e.keyCode || e.which;
+            console.log(key);
+            if (key == 8 || key == 91 || key == 92) {
+                return;
+            }
+
+            if (input.value.length == 0 && (key == 190 || key == 110)) {
+                if (e.preventDefault) e.preventDefault();
+                return;
+            }
+
+            if (input.value.includes('.') && (key == 190 || key == 110)) {
+                if (e.preventDefault) e.preventDefault();
+                return;
+            }
+
+            if (key == 190 || key == 110 || (key > 48 && key < 57)) {
+                return;
+            }
+
+            if (e.preventDefault) e.preventDefault(); //normal browsers
+        }
+
+        function filterMaxValue(input, max) {
+            if (input.value > max) {
+                input.value = max;
+            }
+        }
+
+        function filterMin(input, min) {
+            if (input.value.length == 0) {
+                input.value = min;
+            }
+        }
 
     $("#form-schedule-submit").click(function (e) {
         e.preventDefault();

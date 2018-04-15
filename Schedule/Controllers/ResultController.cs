@@ -75,7 +75,7 @@ namespace Schedule.Controllers
                                 new DeviceGraphRow
                                 {
                                     PalleteWork = 12.1m,
-                                    Duration = 5
+                                    Duration = 99
                                 },
                                 new DeviceGraphRow
                                 {
