@@ -4,6 +4,10 @@
     {
         public decimal PalleteWork { get; set; }
 
-        public int Duration { get; set; }
+        public int Start { get; set; }
+
+        public int End { get; set; }
+
+        public int Duration => End - Start;
     }
 }

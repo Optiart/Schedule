@@ -8,18 +8,18 @@ namespace Schedule.Models
     {
         public int Id { get; set; }
 
-        public int TabId { get; set; }
+        public int[] TabIds { get; set; }
 
         public decimal[,] Chain { get; set; }
 
-        public Dictionary<int, DeviceGraphRow[]> GraphData { get; set; }
+        public Dictionary<AlgorithmType, Dictionary<int, DeviceGraphRow[]>> GraphData { get; set; }
 
         public Dictionary<int, string> ColorByPalleteWork { get; }
 
-        public int MaxDuration
-        {
-            get { return GraphData.Max(kvp => kvp.Value.Sum(v => v.Duration)); }
-        }
+        public Dictionary<AlgorithmType, int> MaxDurationByAlgorithmType => 
+            GraphData.ToDictionary(
+                data => data.Key, 
+                data => data.Value.Max(kvp => kvp.Value.Max(g => g.End)));
 
         public ResultViewModel()
         {

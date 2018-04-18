@@ -17,147 +17,161 @@ namespace Schedule.Controllers
         }
 
         [Route("all")]
-        public ActionResult AvailableResults()
+        public ActionResult AvailableResults(int tabId = 1)
         {
-            var fakeResults = new ResultViewModel[]
+            var fakeResult = new ResultViewModel
             {
-                new ResultViewModel
-                {
-                    Id = 1,
-                    Chain = new decimal[2,2] { { 1.2m, 5 }, { 1.2m, 7 } },
-                    GraphData = new Dictionary<int, DeviceGraphRow[]>
+                Id = 1,
+                TabIds = new[] { 1, 2, 3 },
+                Chain = new decimal[,] { { 1.2m, 5 }, { 2.2m, 4 }, { 3.2m, 8 }, { 4.2m, 8 }, { 5.2m, 5 }, { 6.2m, 5 }, { 6.2m, 5 }, { 6.2m, 5 }, { 6.2m, 5 } },
+                GraphData = new Dictionary<AlgorithmType, Dictionary<int, DeviceGraphRow[]>>
                     {
-                           { 6, new DeviceGraphRow[]
+                        { AlgorithmType.Algorithm1,  new Dictionary<int, DeviceGraphRow[]>
                             {
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 19.1m,
-                                    Duration = 3
+                                   { 6, new DeviceGraphRow[]
+                                    {
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 19.1m,
+                                            Start = 3,
+                                            End = 7
+                                        },
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 20.1m,
+                                            Start = 10,
+                                            End = 15
+                                        }
+                                    }
                                 },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 20.1m,
-                                    Duration = 5
+                                { 5, new DeviceGraphRow[]
+                                    {
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 19.1m,
+                                            Start = 1,
+                                            End = 4
+                                        },
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 20.1m,
+                                            Start = 7,
+                                            End = 9
+                                        }
+                                    }
                                 }
                             }
                         },
-                         { 5, new DeviceGraphRow[]
+                        { AlgorithmType.Algorithm2,  new Dictionary<int, DeviceGraphRow[]>
                             {
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 15.1m,
-                                    Duration = 3
+                                   { 1, new DeviceGraphRow[]
+                                    {
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 2.1m,
+                                            Start = 1,
+                                            End = 3
+                                        },
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 1.1m,
+                                            Start = 5,
+                                            End = 18
+                                        }
+                                    }
                                 },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 16.1m,
-                                    Duration = 5
-                                },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 17.1m,
-                                    Duration = 1
-                                },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 18.1m,
-                                    Duration = 2
+                                { 2, new DeviceGraphRow[]
+                                    {
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 5.1m,
+                                            Start = 0,
+                                            End = 2
+                                        },
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 6.1m,
+                                            Start = 5,
+                                            End = 9
+                                        }
+                                    }
                                 }
                             }
-                        },
-                                                { 4, new DeviceGraphRow[]
+                        },{ AlgorithmType.Algorithm3,  new Dictionary<int, DeviceGraphRow[]>
                             {
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 11.1m,
-                                    Duration = 3
+                                   { 3, new DeviceGraphRow[]
+                                    {
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 3.1m,
+                                            Start = 4,
+                                            End = 8
+                                        },
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 6.1m,
+                                            Start = 11,
+                                            End = 19
+                                        }
+                                    }
                                 },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 12.1m,
-                                    Duration = 99
-                                },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 13.1m,
-                                    Duration = 1
-                                },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 14.1m,
-                                    Duration = 2
+                                { 4, new DeviceGraphRow[]
+                                    {
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 5.1m,
+                                            Start = 0,
+                                            End = 2
+                                        },
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 6.1m,
+                                            Start = 5,
+                                            End = 9
+                                        }
+                                    }
                                 }
                             }
-                        },
-                        { 3, new DeviceGraphRow[]
+                        },{ AlgorithmType.Algorithm4,  new Dictionary<int, DeviceGraphRow[]>
                             {
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 1.1m,
-                                    Duration = 3
+                                   { 8, new DeviceGraphRow[]
+                                    {
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork =15.1m,
+                                            Start = 0,
+                                            End = 9
+                                        },
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 16.1m,
+                                            Start = 11,
+                                            End = 15
+                                        }
+                                    }
                                 },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 2.1m,
-                                    Duration = 5
-                                }
-                            }
-                        },
-                        { 2, new DeviceGraphRow[]
-                            {
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 3.1m,
-                                    Duration = 6
-                                },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 4.2m,
-                                    Duration = 2
-                                },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 5.1m,
-                                    Duration = 2
-                                }
-                            }
-                        },
-                        { 1, new DeviceGraphRow[]
-                            {
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 6.1m,
-                                    Duration = 2
-                                },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 7.1m,
-                                    Duration = 2
-                                },
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 8.2m,
-                                    Duration = 2
-                                }
-                                ,
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 9.2m,
-                                    Duration = 2
-                                }
-                                ,
-                                new DeviceGraphRow
-                                {
-                                    PalleteWork = 10.2m,
-                                    Duration = 2
+                                { 9, new DeviceGraphRow[]
+                                    {
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 12.1m,
+                                            Start = 2,
+                                            End = 3
+                                        },
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 13.1m,
+                                            Start = 3,
+                                            End = 6
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
             };
 
-            return View(fakeResults);
+            return View(fakeResult);
         }
     }
 }

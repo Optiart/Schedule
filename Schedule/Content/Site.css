@@ -10,7 +10,7 @@
 body {
     margin: auto;
     font-family: 'Roboto-Light';
-    background-color: #f7f7f7;
+    background-color: #EFEEE9;
 }
 
 nav {
@@ -132,17 +132,66 @@ form {
 
 /* Graph */
 
+.graph-grid {
+    width: 1110px;
+    margin-top: 15px;
+}
+
+    .graph-grid .graph-row {
+        display: block;
+        overflow-y: scroll;
+        overflow-x: scroll;
+        margin-top: 30px;
+    }
+
+        .graph-grid .graph-row .graph-name {
+            display: block;
+            padding-left: 40px;
+        }
+
+    .graph-grid .chain {
+        overflow-x: no-display !important;
+        overflow-y: scroll;
+        height: 150px;
+        width: 250px;
+    }
+
+        .graph-grid .chain > table {
+            margin: 0 auto;
+            border: 1px solid #000000
+        }
+
+    .graph-grid .legend {
+        padding-left: 62px;
+        width: 850px;
+    }
+
+        .graph-grid .legend .legend-header {
+            display: block;
+            text-align: left;
+            padding-left: 50px;
+        }
+
+    .graph-grid .chain .chain-header > td {
+        border: 1px solid #000000;
+        text-align: center;
+    }
+
+    .graph-grid .chain .chain-data-row > td {
+        text-align: center;
+    }
+
 .graph {
     display: block;
     width: 100%;
-    overflow-x: auto;
     white-space: nowrap;
-    margin-top: 20px;
 }
 
     .graph .device-id {
-        font-weight: bold;
+        font-size: 14px;
         width: 15px;
+        right: -1px;
+        position: relative;
     }
 
     .graph .device-work {
@@ -152,6 +201,7 @@ form {
     .graph .x-data {
         font-size: 0;
         white-space: nowrap;
+        border-left: solid 1px #000000;
     }
 
         .graph .x-data > div {
@@ -178,7 +228,6 @@ form {
         .graph .x > div {
             display: inline-block;
             border-bottom: solid 1px #000000;
-            width: 30px;
         }
 
     .graph .x-arrow {
@@ -186,6 +235,17 @@ form {
         color: black;
         position: relative;
         border: none !important;
-        top: -16px;
+        top: -14px;
         left: -3px;
+    }
+
+    .graph .y-arrow {
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+        position: relative;
+        left: 8px;
+        top: 6px;
     }

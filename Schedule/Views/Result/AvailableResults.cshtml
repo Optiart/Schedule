@@ -1,11 +1,11 @@
-﻿@model ResultViewModel[]
+﻿@model ResultViewModel
 
 @{
     ViewBag.Title = "Результати";
     int index = 1;
 }
 
-@if (Model == null || Model.Length == 0)
+@if (Model == null)
 {
     <h2>Дані відсутні</h2>
 }
@@ -13,45 +13,56 @@ else
 {
     <div class="tab-nav">
         <ul class="nav nav-tabs">
-            @foreach (var result in Model)
-            {
-                <li id="nav-item-@result.Id" class="nav-item">
-                    <a id="tab-@result.Id" href="#" class="tab nav-link @(index == 1 ? "tab-active nav-link-active" : string.Empty)">Вкладка №@(index++)</a>
-                </li>
-            }
+            @foreach (var id in Model.TabIds)
+                {
+                    <li id="nav-item-@id" class="nav-item">
+                        <a id="tab-@id" href="#" class="tab nav-link @(index == 1 ? "tab-active nav-link-active" : string.Empty)">Вкладка №@(index++)</a>
+                    </li>
+                }
         </ul>
     </div>
 
-    <!--Graph section-->
-
-    <div class="graph">
-        @foreach (var resultTab in Model)
-        {
-            foreach (var kvp in resultTab.GraphData)
-            {
-                <div class="device-work">
-                    <div class="device-id">
-                        @kvp.Key
-                    </div><div class="x-data">
-                        @foreach (var row in kvp.Value)
-                        {
-                            string width = (row.Duration * 30).ToString() + "px";
-                            string color = resultTab.ColorByPalleteWork[(int)row.PalleteWork];
-                            <div style="width: @width; background-color: @color">@row.PalleteWork</div>
-                        }
-                    </div>
-                    <div class="y-margin"></div>
-                </div>
-            }
-            <div class="y-margin"></div><div class="y-margin"></div>
-            <div class="x">
-                @for (int i = 1; i <= resultTab.MaxDuration; i++)
+    <div class="graph-grid">
+        <div class="chain">
+            <table>
+                <tr class="chain-header">
+                    <td width="100px" height="40px">Робота</td>
+                    <td width="100px" height="40px">Тривалість</td>
+                </tr>
+                @{ int rows = Model.Chain.GetLength(0); }
+                @for (int i = 0; i < rows; i++)
                 {
-                    <div></div>
+                    <tr class="chain-data-row">
+                        <td>@Model.Chain[i, 0]</td>
+                        <td>@Model.Chain[i, 1]</td>
+                    </tr>
                 }
-                <div class="x-arrow">&#x21FE; t</div>
-            </div>
-        }
+            </table>
+        </div>
+        <div class="legend">
+            <div class="legend-header">УМОВНІ ПОЗНАЧЕННЯ</div>
+            <div class="block"><span>i</span> - ланцюг</div>
+            <div class="block"><span>j</span> - порядок виконання роботи в ланцюзі</div>
+            <div class="block"><span>p</span> - тривалість ij</div>
+        </div>
+        <div class="graph-row">
+            <div class="graph-name">@AlgorithmType.Algorithm1</div>
+            @RenderGraph(AlgorithmType.Algorithm1)
+        </div>
+
+        <div class="graph-row">
+            <div class="graph-name">@AlgorithmType.Algorithm2</div>
+            @RenderGraph(AlgorithmType.Algorithm2)
+        </div>
+        <div class="graph-row">
+            <div class="graph-name">@AlgorithmType.Algorithm3</div>
+            @RenderGraph(AlgorithmType.Algorithm3)
+        </div>
+
+        <div class="graph-row">
+            <div class="graph-name">@AlgorithmType.Algorithm4</div>
+            @RenderGraph(AlgorithmType.Algorithm4)
+        </div>
     </div>
 }
 
@@ -60,4 +71,48 @@ else
     <script type="text/javascript">
         $(activateNavLink('nav-availableResults'));
     </script>
+}
+
+@helper RenderGraph(AlgorithmType type)
+    {
+        <div class="graph">
+            @{ int widthBlockPx = 25; }
+            <div class="y-arrow">&#x21FE;</div>
+            @foreach (var kvp in Model.GraphData[type])
+            {
+                <div class="device-work">
+                    <div class="device-id">
+                        @kvp.Key
+                    </div><div class="x-data">
+                        @{
+                            int rowGapIndex = 0;
+                        }
+                        @foreach (var row in kvp.Value)
+                        {
+                            for (int i = rowGapIndex; i < row.Start; i++)
+                            {
+                                <div style="width: @(widthBlockPx)px; background-color: #EFEEE9; border:none"></div>
+                            }
+
+                            string width = (row.Duration * widthBlockPx).ToString() + "px";
+                            string color = Model.ColorByPalleteWork[(int)row.PalleteWork];
+                            <div style="width: @width; background-color: @color">@row.PalleteWork/@row.Duration</div>
+                            { rowGapIndex = row.End; }
+                        }
+                    </div>
+                    <div class="y-margin"></div>
+                </div>
+            }
+            <div class="y-margin"></div><div class="y-margin"></div>
+            <div class="x">
+                @for (int i = 0; i <= Model.MaxDurationByAlgorithmType[type]; i++)
+                {
+                    <div style="position:relative; width:@(widthBlockPx)px; left:-1px">
+                        <div style="font-size:14px; border: none; position:absolute; top:-10px;">|</div>
+                        <div style="font-size:14px; border: none; position:absolute; top:5px;left:-3px">@i</div>
+                    </div>
+                }
+                <div class="x-arrow">&#x21FE; t, од.</div>
+            </div>
+        </div>
 }
