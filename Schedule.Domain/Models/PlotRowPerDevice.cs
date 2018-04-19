@@ -1,8 +1,8 @@
 ﻿namespace Schedule.Domain.Models
 {
-    public class DeviceGraphRow
+    public class PlotRowPerDevice
     {
-        public decimal PalleteWork { get; set; }
+        public decimal PalletWork { get; set; }
 
         public decimal End { get; set; }
 

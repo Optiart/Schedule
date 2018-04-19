@@ -22,7 +22,7 @@ else
         </ul>
     </div>
 
-    <div class="graph-grid">
+    <div class="plot-grid">
         <div class="chain">
             <table>
                 <tr class="chain-header">
@@ -39,32 +39,50 @@ else
                 }
             </table>
         </div>
-        <div class="legend">
-            <div class="legend-header">УМОВНІ ПОЗНАЧЕННЯ</div>
-            <div class="block"><span>i</span> - ланцюг</div>
-            <div class="block"><span>j</span> - порядок виконання роботи в ланцюзі</div>
-            <div class="block"><span>p</span> - тривалість ij</div>
-        </div>
-        <div class="graph-row">
-            <div class="graph-name">@AlgorithmType.Algorithm1</div>
-            @RenderGraph(AlgorithmType.Algorithm1)
-        </div>
+        <div class="algorithm-legend">
+            <table>
+                <tr class="algorithm-legend-header">
+                    <td width="120px" height="40px">Алгоритм</td>
+                    <td width="60px" height="40px">C<sup>*</sup></td>
+                    <td width="60px" height="40px">C<sub>max</sub></td>
 
-        <div class="graph-row">
-            <div class="graph-name">@AlgorithmType.Algorithm2</div>
-            @RenderGraph(AlgorithmType.Algorithm2)
-        </div>
-        <div class="graph-row">
-            <div class="graph-name">@AlgorithmType.Algorithm3</div>
-            @RenderGraph(AlgorithmType.Algorithm3)
-        </div>
+                    @foreach (var summary in Model.AlgorithSummary)
+                    {
+                    <tr class="algorithm-legend-row">
+                        <td>@summary.Type</td>
+                        <td>@summary.Cstar</td>
+                        <td>@summary.Cmax</td>
+                    </tr>
+                }
+                </table>
+            </div>
+            <div class="legend">
+                <div class="legend-header">УМОВНІ ПОЗНАЧЕННЯ</div>
+                <div class="block"><span>i</span> - ланцюг</div>
+                <div class="block"><span>j</span> - порядок виконання роботи в ланцюзі</div>
+                <div class="block"><span>p</span> - тривалість ij</div>
+            </div>
+            <div class="plot-name">@AlgorithmType.A1</div>
+            <div class="plot-row">
+                @RenderGraph(AlgorithmType.A1)
+            </div>
 
-        <div class="graph-row">
-            <div class="graph-name">@AlgorithmType.Algorithm4</div>
-            @RenderGraph(AlgorithmType.Algorithm4)
+            <div class="plot-name">@AlgorithmType.A2</div>
+            <div class="plot-row">
+                @RenderGraph(AlgorithmType.A2)
+            </div>
+
+            <div class="plot-name">@AlgorithmType.A3</div>
+            <div class="plot-row">
+                @RenderGraph(AlgorithmType.A3)
+            </div>
+
+            <div class="plot-name">@AlgorithmType.A4</div>
+            <div class="plot-row">
+                @RenderGraph(AlgorithmType.A4)
+            </div>
         </div>
-    </div>
-}
+    }
 
 @section scripts
 {
@@ -79,15 +97,15 @@ else
 
 @helper RenderGraph(AlgorithmType type)
     {
-        <div class="graph">
+        <div class="plot">
             @{
                 int widthBlockPx = 4;
                 int epsilon = 10;
-                int currentDevice = Model.GraphData[type].Count;
+                int currentDevice = Model.PlotData[type].Count;
                 decimal lastWorkEnd = 0;
             }
             <div class="y-arrow">&#x21FE;</div>
-            @foreach (var kvp in Model.GraphData[type])
+            @foreach (var kvp in Model.PlotData[type])
             {
                 <div class="device-work">
                     <div class="device-id">
@@ -104,8 +122,8 @@ else
                             }
 
                             string width = ((int)(row.Duration * epsilon) * widthBlockPx).ToString() + "px";
-                            string color = Model.ColorByPalleteWork[(int)row.PalleteWork];
-                            <div data-toggle="tooltip" title="@row.Duration" style="cursor:pointer; width: @width; background-color: @color">@row.PalleteWork / @row.Duration</div>
+                            string color = Model.ColorByPalleteWork[(int)row.PalletWork];
+                            <div data-toggle="tooltip" title="@row.End" style="cursor:pointer; width: @width; background-color: @color">@row.PalletWork / @row.Duration</div>
                             {
                                 rowGapIndex = (int)(row.End * epsilon);
                                 lastWorkEnd = row.End;
@@ -126,7 +144,7 @@ else
                 {
                     <div style="position:relative; width:@(widthBlockPx * epsilon)px; left:-1px">
                         <div style="font-size:14px; border: none; position:absolute; top:-10px;">|</div>
-                        <div style="font-size:14px; border: none; position:absolute; top:5px;left:-3px">@i</div>
+                        <div style="font-size:14px; border: none; position:absolute; top:5px; left:-3px">@i</div>
                     </div>
                 }
                 <div class="x-arrow">&#x21FE; t, од.</div>

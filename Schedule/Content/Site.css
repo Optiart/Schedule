@@ -132,64 +132,71 @@ form {
 
 /* Graph */
 
-.graph-grid {
+.plot-grid {
     width: 1110px;
     margin-top: 15px;
 }
 
-    .graph-grid .graph-row {
+    .plot-grid .plot-row {
         display: block;
         overflow-y: scroll;
         overflow-x: scroll;
-        height: 200px;
+        height: 170px;
+    }
+
+    .plot-grid .plot-name {
+        display: block;
+        padding-left: 40px;
         margin-top: 30px;
     }
 
-        .graph-grid .graph-row .graph-name {
-            display: block;
-            padding-left: 40px;
-        }
-
-    .graph-grid .chain {
+    .plot-grid .chain {
         overflow-x: no-display !important;
         overflow-y: scroll;
         height: 150px;
         width: 250px;
     }
 
-        .graph-grid .chain > table {
+        .plot-grid .chain > table,
+        .plot-grid .algorithm-legend > table {
             margin: 0 auto;
             border: 1px solid #000000
         }
 
-    .graph-grid .legend {
-        padding-left: 62px;
-        width: 850px;
-        
+    .plot-grid .algorithm-legend {
+        padding-left: 42px;
+        width: 400px;
     }
 
-        .graph-grid .legend .legend-header {
+    .plot-grid .legend {
+        padding-left: 32px;
+        width: 400px;
+    }
+
+        .plot-grid .legend .legend-header {
             display: block;
             text-align: left;
             padding-left: 50px;
         }
 
-    .graph-grid .chain .chain-header > td {
+    .plot-grid .chain .chain-header > td,
+    .plot-grid .algorithm-legend-header > td {
         border: 1px solid #000000;
         text-align: center;
     }
 
-    .graph-grid .chain .chain-data-row > td {
+    .plot-grid .chain .chain-data-row > td,
+    .plot-grid .algorithm-legend-row > td {
         text-align: center;
     }
 
-.graph {
+.plot {
     display: block;
     width: 100%;
     white-space: nowrap;
 }
 
-    .graph .device-id {
+    .plot .device-id {
         font-size: 14px;
         width: 19px;
         right: 2px;
@@ -197,18 +204,18 @@ form {
         text-align: right;
     }
 
-    .graph .device-work {
+    .plot .device-work {
         display: block;
     }
 
-    .graph .x-data {
+    .plot .x-data {
         font-size: 0;
         white-space: nowrap;
         border-left: solid 1px #000000;
         margin-left: 4px;
     }
 
-        .graph .x-data > div {
+        .plot .x-data > div {
             display: inline-block;
             text-align: center;
             height: 25px;
@@ -216,7 +223,7 @@ form {
             font-size: 14px;
         }
 
-    .graph .y-margin {
+    .plot .y-margin {
         height: 8px;
         width: 16px;
         border-right: solid 1px #000000;
@@ -224,18 +231,18 @@ form {
         margin-left: 8px;
     }
 
-    .graph .x {
+    .plot .x {
         font-size: 0;
         margin-left: 23px;
         white-space: nowrap;
     }
 
-        .graph .x > div {
+        .plot .x > div {
             display: inline-block;
             border-bottom: solid 1px #000000;
         }
 
-    .graph .x-arrow {
+    .plot .x-arrow {
         font-size: 19px;
         color: black;
         position: relative;
@@ -244,7 +251,7 @@ form {
         left: -3px;
     }
 
-    .graph .y-arrow {
+    .plot .y-arrow {
         -webkit-transform: rotate(-90deg);
         -moz-transform: rotate(-90deg);
         -o-transform: rotate(-90deg);

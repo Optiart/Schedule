@@ -12,16 +12,23 @@ namespace Schedule.Models
 
         public decimal[,] Chain { get; set; }
 
-        public Dictionary<AlgorithmType, Dictionary<int, DeviceGraphRow[]>> GraphData { get; set; }
+        public AlgorithSummary[] AlgorithSummary { get; set; }
 
-        public Dictionary<int, string> ColorByPalleteWork { get; }
+        public Dictionary<AlgorithmType, Plot> PlotData { get; set; }
 
-        public Dictionary<AlgorithmType, decimal> MaxDurationByAlgorithmType => 
-            GraphData.ToDictionary(
-                data => data.Key, 
+        public Dictionary<int, string> ColorByPalleteWork { get; private set; }
+
+        public Dictionary<AlgorithmType, decimal> MaxDurationByAlgorithmType =>
+            PlotData.ToDictionary(
+                data => data.Key,
                 data => data.Value.Max(kvp => kvp.Value.Max(g => g.End)));
 
         public ResultViewModel()
+        {
+            DefineColors();
+        }
+
+        private void DefineColors()
         {
             ColorByPalleteWork = new Dictionary<int, string>
                     {

@@ -6,6 +6,6 @@ namespace Schedule.Domain.Models
     {
         public int TabId { get; set; }
 
-        public Dictionary<int, DeviceGraphRow[]> GraphData { get; set; }
+        public Dictionary<int, PlotRowPerDevice[]> GraphData { get; set; }
     }
 }

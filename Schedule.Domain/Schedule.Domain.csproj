@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ITabService.cs" />
-    <Compile Include="Models\DeviceGraphRow.cs" />
+    <Compile Include="Models\PlotRowPerDevice.cs" />
     <Compile Include="Models\Enums\DeviceType.cs" />
     <Compile Include="Models\Enums\FormType.cs" />
     <Compile Include="Models\Result.cs" />
