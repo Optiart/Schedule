@@ -16,7 +16,7 @@ namespace Schedule.Models
 
         public Dictionary<int, string> ColorByPalleteWork { get; }
 
-        public Dictionary<AlgorithmType, int> MaxDurationByAlgorithmType => 
+        public Dictionary<AlgorithmType, decimal> MaxDurationByAlgorithmType => 
             GraphData.ToDictionary(
                 data => data.Key, 
                 data => data.Value.Max(kvp => kvp.Value.Max(g => g.End)));

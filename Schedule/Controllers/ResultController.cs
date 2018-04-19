@@ -33,14 +33,14 @@ namespace Schedule.Controllers
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 19.1m,
-                                            Start = 3,
-                                            End = 7
+                                            Duration = 4,
+                                            End = 7.7m
                                         },
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 20.1m,
-                                            Start = 10,
-                                            End = 15
+                                            Duration = 5,
+                                            End = 15.7m
                                         }
                                     }
                                 },
@@ -49,13 +49,13 @@ namespace Schedule.Controllers
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 19.1m,
-                                            Start = 1,
+                                            Duration = 3,
                                             End = 4
                                         },
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 20.1m,
-                                            Start = 7,
+                                            Duration = 2,
                                             End = 9
                                         }
                                     }
@@ -69,13 +69,13 @@ namespace Schedule.Controllers
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 2.1m,
-                                            Start = 1,
+                                            Duration = 2,
                                             End = 3
                                         },
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 1.1m,
-                                            Start = 5,
+                                            Duration = 13,
                                             End = 18
                                         }
                                     }
@@ -85,13 +85,13 @@ namespace Schedule.Controllers
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 5.1m,
-                                            Start = 0,
+                                            Duration = 2,
                                             End = 2
                                         },
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 6.1m,
-                                            Start = 5,
+                                            Duration = 4,
                                             End = 9
                                         }
                                     }
@@ -104,14 +104,14 @@ namespace Schedule.Controllers
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 3.1m,
-                                            Start = 4,
+                                            Duration = 4,
                                             End = 8
                                         },
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 6.1m,
-                                            Start = 11,
-                                            End = 19
+                                            Duration = 7,
+                                            End = 18.5m
                                         }
                                     }
                                 },
@@ -120,14 +120,46 @@ namespace Schedule.Controllers
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 5.1m,
-                                            Start = 0,
-                                            End = 2
+                                            Duration = 2,
+                                            End = 2.3m
                                         },
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 6.1m,
-                                            Start = 5,
-                                            End = 9
+                                            Duration = 4,
+                                            End = 9.7m
+                                        }
+                                    }
+                                },
+                                { 20, new DeviceGraphRow[]
+                                    {
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 5.1m,
+                                            Duration = 2,
+                                            End = 2.3m
+                                        },
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 6.1m,
+                                            Duration = 4,
+                                            End = 9.7m
+                                        }
+                                    }
+                                },
+                                { 21, new DeviceGraphRow[]
+                                    {
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 5.1m,
+                                            Duration = 2,
+                                            End = 2.3m
+                                        },
+                                        new DeviceGraphRow
+                                        {
+                                            PalleteWork = 6.1m,
+                                            Duration = 4,
+                                            End = 9.7m
                                         }
                                     }
                                 }
@@ -139,13 +171,13 @@ namespace Schedule.Controllers
                                         new DeviceGraphRow
                                         {
                                             PalleteWork =15.1m,
-                                            Start = 0,
+                                            Duration = 9,
                                             End = 9
                                         },
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 16.1m,
-                                            Start = 11,
+                                            Duration = 4,
                                             End = 15
                                         }
                                     }
@@ -155,13 +187,13 @@ namespace Schedule.Controllers
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 12.1m,
-                                            Start = 2,
+                                            Duration = 1,
                                             End = 3
                                         },
                                         new DeviceGraphRow
                                         {
                                             PalleteWork = 13.1m,
-                                            Start = 3,
+                                            Duration = 3,
                                             End = 6
                                         }
                                     }

@@ -14,11 +14,11 @@ else
     <div class="tab-nav">
         <ul class="nav nav-tabs">
             @foreach (var id in Model.TabIds)
-                {
-                    <li id="nav-item-@id" class="nav-item">
-                        <a id="tab-@id" href="#" class="tab nav-link @(index == 1 ? "tab-active nav-link-active" : string.Empty)">Вкладка №@(index++)</a>
-                    </li>
-                }
+            {
+                <li id="nav-item-@id" class="nav-item">
+                    <a id="tab-@id" href="#" class="tab nav-link @(index == 1 ? "tab-active nav-link-active" : string.Empty)">Вкладка №@(index++)</a>
+                </li>
+            }
         </ul>
     </div>
 
@@ -70,13 +70,22 @@ else
 {
     <script type="text/javascript">
         $(activateNavLink('nav-availableResults'));
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
     </script>
 }
 
 @helper RenderGraph(AlgorithmType type)
     {
         <div class="graph">
-            @{ int widthBlockPx = 25; }
+            @{
+                int widthBlockPx = 4;
+                int epsilon = 10;
+                int currentDevice = Model.GraphData[type].Count;
+                decimal lastWorkEnd = 0;
+            }
             <div class="y-arrow">&#x21FE;</div>
             @foreach (var kvp in Model.GraphData[type])
             {
@@ -89,16 +98,24 @@ else
                         }
                         @foreach (var row in kvp.Value)
                         {
-                            for (int i = rowGapIndex; i < row.Start; i++)
+                            for (int i = rowGapIndex; i < (int)(row.Start * epsilon); i++)
                             {
                                 <div style="width: @(widthBlockPx)px; background-color: #EFEEE9; border:none"></div>
                             }
 
-                            string width = (row.Duration * widthBlockPx).ToString() + "px";
+                            string width = ((int)(row.Duration * epsilon) * widthBlockPx).ToString() + "px";
                             string color = Model.ColorByPalleteWork[(int)row.PalleteWork];
-                            <div style="width: @width; background-color: @color">@row.PalleteWork/@row.Duration</div>
-                            { rowGapIndex = row.End; }
+                            <div data-toggle="tooltip" title="@row.Duration" style="cursor:pointer; width: @width; background-color: @color">@row.PalleteWork / @row.Duration</div>
+                            {
+                                rowGapIndex = (int)(row.End * epsilon);
+                                lastWorkEnd = row.End;
+                            }
                         }
+                        <div style="position:relative; left: -1px; border: 0;">
+                            <div style="position:absolute; border: 0;height: @(currentDevice * 33 + 16)px; background-image: url('../../Images/vertical-dash.png'); background-repeat:repeat-y">&nbsp;</div>
+                            <div style="position:absolute; border: 0; left:-2px; top: @(currentDevice * 33 + 35)px;">C = @lastWorkEnd</div>
+                            @{ currentDevice--; }
+                        </div>
                     </div>
                     <div class="y-margin"></div>
                 </div>
@@ -107,7 +124,7 @@ else
             <div class="x">
                 @for (int i = 0; i <= Model.MaxDurationByAlgorithmType[type]; i++)
                 {
-                    <div style="position:relative; width:@(widthBlockPx)px; left:-1px">
+                    <div style="position:relative; width:@(widthBlockPx * epsilon)px; left:-1px">
                         <div style="font-size:14px; border: none; position:absolute; top:-10px;">|</div>
                         <div style="font-size:14px; border: none; position:absolute; top:5px;left:-3px">@i</div>
                     </div>
