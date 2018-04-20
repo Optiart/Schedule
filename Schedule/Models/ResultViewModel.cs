@@ -8,11 +8,13 @@ namespace Schedule.Models
     {
         public int Id { get; set; }
 
+        public int CurrentTab { get; set; }
+
         public int[] TabIds { get; set; }
 
         public decimal[,] Chain { get; set; }
 
-        public AlgorithSummary[] AlgorithSummary { get; set; }
+        public AlgorithSummary[] AlgorithSummaries { get; set; }
 
         public Dictionary<AlgorithmType, Plot> PlotData { get; set; }
 

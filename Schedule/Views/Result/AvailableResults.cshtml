@@ -13,10 +13,14 @@ else
 {
     <div class="tab-nav">
         <ul class="nav nav-tabs">
-            @foreach (var id in Model.TabIds)
+            @foreach (var tabId in Model.TabIds)
             {
-                <li id="nav-item-@id" class="nav-item">
-                    <a id="tab-@id" href="#" class="tab nav-link @(index == 1 ? "tab-active nav-link-active" : string.Empty)">Вкладка №@(index++)</a>
+                <li id="nav-item-@tabId" class="nav-item">
+                    @Html.ActionLink(
+                        "Вкладка №" + index++,
+                        "AvailableResults",
+                        new { tabId = tabId },
+                        new { @class = string.Format("{0} {1}", "tab-active ", tabId == Model.CurrentTab ? "nav-link-active" : string.Empty) })
                 </li>
             }
         </ul>
@@ -46,7 +50,7 @@ else
                     <td width="60px" height="40px">C<sup>*</sup></td>
                     <td width="60px" height="40px">C<sub>max</sub></td>
 
-                    @foreach (var summary in Model.AlgorithSummary)
+                    @foreach (var summary in Model.AlgorithSummaries)
                     {
                     <tr class="algorithm-legend-row">
                         <td>@summary.Type</td>

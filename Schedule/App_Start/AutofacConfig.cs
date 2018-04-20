@@ -19,7 +19,8 @@ namespace Schedule
 
             builder.RegisterType<TabService>().As<ITabService>();
             builder.RegisterType<ScheduleResultService>().As<IScheduleResultService>();
-            builder.RegisterType<Repository>().As<IRepository>();
+            builder.RegisterType<TabRepository>().As<ITabRepository>();
+            builder.RegisterType<ResultRepository>().As<IResultRepository>();
 
             IContainer container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

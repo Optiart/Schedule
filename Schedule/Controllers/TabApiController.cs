@@ -10,10 +10,12 @@ namespace Schedule.Controllers
     public class TabApiController : ApiController
     {
         private ITabService _tabService;
+        private IScheduleResultService _scheduleResultService;
 
-        public TabApiController(ITabService tabService)
+        public TabApiController(ITabService tabService, IScheduleResultService scheduleResultService)
         {
             _tabService = tabService;
+            _scheduleResultService = scheduleResultService;
         }
 
         [Route("save", Name = "SaveTabRoute")]
@@ -35,7 +37,9 @@ namespace Schedule.Controllers
                 NumberOfWorkPerRow = saveTabRequest.NumberOfWorkPerRow
             };
 
-            _tabService.Save(tab);
+            tab.Id = _tabService.Save(tab);
+            _scheduleResultService.Process(tab);
+
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "success"));
         }
 
