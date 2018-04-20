@@ -51,6 +51,12 @@
     <script type="text/javascript">
     $(activateNavLink('nav-addTab'));
 
+        (function () {
+            var numberOfPalletes = $("#NumberOfPalleteRows").val();
+            var numberOfWork = $("#NumberOfWorkPerRow").val();
+            renderPalleteRows(numberOfPalletes, numberOfWork);
+        })();
+
     $("#non-identical").click(function () {
         $("#@FormType.Device").removeClass("disable");
     });
@@ -71,20 +77,20 @@
     var previousPalleteCount = 0;
     var previousWorkCount = 0;
 
-    $("#NumberOfPalleteRows").bind("keyup click", function () {
-        var numberOfPalletes = $("#NumberOfPalleteRows").val();
-        var numberOfWork = $("#NumberOfWorkPerRow").val();
+        $("#NumberOfPalleteRows").bind("keyup click", function () {
+            var numberOfPalletes = $("#NumberOfPalleteRows").val();
+            var numberOfWork = $("#NumberOfWorkPerRow").val();
 
-        if (numberOfWork == 0) {
-            $("#Pallete-fields").empty();
-            return;
-        }
+            if (numberOfWork == 0) {
+                $("#Pallete-fields").empty();
+                return;
+            }
 
-        if (previousPalleteCount !== numberOfPalletes) {
-            previousPalleteCount = numberOfPalletes;
-            renderPalleteRows(numberOfPalletes, numberOfWork);
-        }
-    });
+            if (previousPalleteCount !== numberOfPalletes) {
+                previousPalleteCount = numberOfPalletes;
+                renderPalleteRows(numberOfPalletes, numberOfWork);
+            }
+        });
 
     $("#NumberOfWorkPerRow").bind('keyup click', function () {
         var numberOfPalletes = $("#NumberOfPalleteRows").val();

@@ -24,15 +24,15 @@ namespace Schedule.Models
         {
         }
 
-        public Tab(Tabs dto)
+        public Tab(TabDto dto)
         {
-            Id = dto.id;
-            NumberOfDevices = dto.number_of_devices;
-            DeviceType = (DeviceType)dto.device_type;
-            DeviceProductivities = JsonConvert.DeserializeObject<decimal[]>(dto.productivity);
-            NumberOfPalleteRows = dto.number_of_palletes;
-            NumberOfWorkPerRow = dto.number_of_work;
-            DurationByWork = JsonConvert.DeserializeObject<decimal[,]>(dto.work_per_pallete);
+            Id = dto.Id;
+            NumberOfDevices = dto.NumberOfDevices;
+            DeviceType = (DeviceType)dto.DeviceType;
+            DeviceProductivities = JsonConvert.DeserializeObject<decimal[]>(dto.Productivity);
+            NumberOfPalleteRows = dto.NumberOfPalletes;
+            NumberOfWorkPerRow = dto.NumberOfWork;
+            DurationByWork = JsonConvert.DeserializeObject<decimal[,]>(dto.WorkPerPallete);
         }
     }
 }

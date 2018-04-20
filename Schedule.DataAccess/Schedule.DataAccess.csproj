@@ -49,14 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IRepository.cs" />
+    <Compile Include="DataContext\AlgorithmSummaryDto.cs" />
+    <Compile Include="IResultRepository.cs" />
+    <Compile Include="ITabRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository.cs" />
-    <Compile Include="DataContext\Results.cs" />
+    <Compile Include="ResultRepository.cs" />
+    <Compile Include="TabRepository.cs" />
+    <Compile Include="DataContext\ResultDto.cs" />
     <Compile Include="DataContext\ScheduleDbContext.cs" />
-    <Compile Include="DataContext\Tabs.cs" />
+    <Compile Include="DataContext\TabDto.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

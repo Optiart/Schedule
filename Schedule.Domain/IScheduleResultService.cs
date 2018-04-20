@@ -5,6 +5,8 @@ namespace Schedule.Domain
 {
     public interface IScheduleResultService
     {
-        Result Calculate(Tab tab);
+        void Process(Tab tab);
+
+        Result GetResult(int tabId);
     }
 }

@@ -3,9 +3,17 @@ using System.Linq;
 
 namespace Schedule.DataAccess
 {
-    internal class Repository : IRepository
+    internal class TabRepository : ITabRepository
     {
-        public Tabs[] GetAll()
+        public int[] GetAllTabIds()
+        {
+            using (var context = new ScheduleDbContext())
+            {
+                return context.Tabs.Select(t => t.Id).ToArray();
+            }
+        }
+
+        public TabDto[] GetAll()
         {
             using (var context = new ScheduleDbContext())
             {
@@ -13,11 +21,11 @@ namespace Schedule.DataAccess
             }
         }
 
-        public void Save(params Tabs[] tabs)
+        public void Save(TabDto tab)
         {
             using (var context = new ScheduleDbContext())
             {
-                context.Tabs.AddRange(tabs);
+                context.Tabs.Add(tab);
                 context.SaveChanges();
             }
         }
@@ -26,20 +34,20 @@ namespace Schedule.DataAccess
         {
             using (var context = new ScheduleDbContext())
             {
-                Tabs tab = context.Tabs.Find(tabId);
+                TabDto tab = context.Tabs.Find(tabId);
                 context.Tabs.Remove(tab);
                 context.SaveChanges();
             }
         }
 
-        public void Update(Tabs tab)
+        public void Update(TabDto tab)
         {
             using (var context = new ScheduleDbContext())
             {
-                Tabs targetTab = context.Tabs.Find(tab.id);
+                TabDto targetTab = context.Tabs.Find(tab.Id);
                 if (targetTab == null)
                 {
-                    throw new InvalidOperationException($"Tab {tab.id} does not exist");
+                    throw new InvalidOperationException($"Tab {tab.Id} does not exist");
                 }
 
                 context.Entry(targetTab).CurrentValues.SetValues(tab);

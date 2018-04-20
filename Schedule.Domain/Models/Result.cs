@@ -4,8 +4,12 @@ namespace Schedule.Domain.Models
 {
     public class Result
     {
-        public int TabId { get; set; }
+        public int Id { get; set; }
 
-        public Dictionary<int, PlotRowPerDevice[]> GraphData { get; set; }
+        public decimal[,] Chain { get; set; }
+
+        public AlgorithSummary[] AlgorithSummaries { get; set; }
+
+        public Dictionary<AlgorithmType, Plot> PlotData { get; set; }
     }
 }

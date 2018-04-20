@@ -7,32 +7,38 @@ namespace Schedule.Domain
 {
     internal class TabService : ITabService
     {
-        private IRepository _repository;
+        private ITabRepository _repository;
 
-        public TabService(IRepository repository)
+        public TabService(ITabRepository repository)
         {
             _repository = repository;
         }
 
+        public int[] GetAllTabIds()
+        {
+            return _repository.GetAllTabIds();
+        }
+
         public Tab[] GetAll()
         {
-            Tabs[] tabsDto = _repository.GetAll();
+            TabDto[] tabsDto = _repository.GetAll();
             return tabsDto.Select(t => new Tab(t)).ToArray();
         }
 
-        public void Save(Tab tabModel)
+        public int Save(Tab tabModel)
         {
-            var dto = new Tabs
+            var dto = new TabDto
             {
-                device_type = (byte)tabModel.DeviceType,
-                number_of_devices = tabModel.NumberOfDevices,
-                number_of_palletes = tabModel.NumberOfPalleteRows,
-                number_of_work = tabModel.NumberOfWorkPerRow,
-                productivity = JsonConvert.SerializeObject(tabModel.DeviceProductivities),
-                work_per_pallete = JsonConvert.SerializeObject(tabModel.DurationByWork)
+                DeviceType = (byte)tabModel.DeviceType,
+                NumberOfDevices = tabModel.NumberOfDevices,
+                NumberOfPalletes = tabModel.NumberOfPalleteRows,
+                NumberOfWork = tabModel.NumberOfWorkPerRow,
+                Productivity = JsonConvert.SerializeObject(tabModel.DeviceProductivities),
+                WorkPerPallete = JsonConvert.SerializeObject(tabModel.DurationByWork)
             };
 
             _repository.Save(dto);
+            return dto.Id;
         }
 
         public void Delete(int id)

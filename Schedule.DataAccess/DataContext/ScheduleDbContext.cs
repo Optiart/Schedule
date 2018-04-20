@@ -9,27 +9,36 @@ namespace Schedule.DataAccess
         {
         }
 
-        public virtual DbSet<Results> Results { get; set; }
-        public virtual DbSet<Tabs> Tabs { get; set; }
+        public virtual DbSet<ResultDto> Results { get; set; }
+        public virtual DbSet<TabDto> Tabs { get; set; }
+        public virtual DbSet<AlgorithmSummaryDto> AlgorithmSummaries { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Results>()
-                .Property(e => e.result)
+            modelBuilder.Entity<ResultDto>()
+                .Property(e => e.Result)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tabs>()
-                .Property(e => e.productivity)
+            modelBuilder.Entity<TabDto>()
+                .Property(e => e.Productivity)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tabs>()
-                .Property(e => e.work_per_pallete)
+            modelBuilder.Entity<TabDto>()
+                .Property(e => e.WorkPerPallete)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tabs>()
+            modelBuilder.Entity<TabDto>()
                 .HasMany(e => e.Results)
                 .WithRequired(e => e.Tabs)
-                .HasForeignKey(e => e.tab_id);
+                .HasForeignKey(e => e.TabId);
+
+            modelBuilder.Entity<AlgorithmSummaryDto>()
+                .Property(e => e.Cstar)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<AlgorithmSummaryDto>()
+                .Property(e => e.Cmax)
+                .HasPrecision(18, 0);
         }
     }
 }

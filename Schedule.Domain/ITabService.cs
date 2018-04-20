@@ -4,9 +4,11 @@ namespace Schedule.Domain
 {
     public interface ITabService
     {
+        int[] GetAllTabIds();
+
         Tab[] GetAll();
 
-        void Save(Tab tabModel);
+        int Save(Tab tabModel);
 
         void Delete(int id);
     }

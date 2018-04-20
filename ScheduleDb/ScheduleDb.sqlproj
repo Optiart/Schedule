@@ -61,5 +61,6 @@
   <ItemGroup>
     <Build Include="Tabs.sql" />
     <Build Include="Results.sql" />
+    <Build Include="AlgorithmSummary.sql" />
   </ItemGroup>
 </Project>
