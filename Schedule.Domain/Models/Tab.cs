@@ -18,7 +18,7 @@ namespace Schedule.Models
 
         public int NumberOfWorkPerRow { get; set; }
 
-        public decimal[,] DurationByWork { get; set; }
+        public int[,] DurationByWork { get; set; }
 
         public Tab()
         {
@@ -32,7 +32,7 @@ namespace Schedule.Models
             DeviceProductivities = JsonConvert.DeserializeObject<decimal[]>(dto.Productivity);
             NumberOfPalleteRows = dto.NumberOfPalletes;
             NumberOfWorkPerRow = dto.NumberOfWork;
-            DurationByWork = JsonConvert.DeserializeObject<decimal[,]>(dto.WorkPerPallete);
+            DurationByWork = JsonConvert.DeserializeObject<int[,]>(dto.WorkPerPallete);
         }
     }
 }

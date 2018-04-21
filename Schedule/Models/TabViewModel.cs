@@ -19,7 +19,7 @@ namespace Schedule.Models
         [Positive]
         public int NumberOfWorkPerRow { get; set; }
 
-        public decimal[,] DurationByWork { get; set; }
+        public int[,] DurationByWork { get; set; }
 
         public TabViewModel()
         {

@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Schedule.DataAccess;
+using Schedule.Domain.Algorithms;
 using Schedule.Domain.Models;
 using Schedule.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,217 +26,161 @@ namespace Schedule.Domain
 
         private Result Calculate(Tab tab)
         {
-            // Do stuff here
-            return null;
+            var resultTable = new decimal?[4, 2];
 
-            //return new Result
+            //------  input data  -------
+
+            var jobPalette = tab.DurationByWork;
+            var mashines = GenerateInputMashines(tab.DeviceProductivities);
+
+            //--------  get chains  ----------
+
+            List<List<int>> chains = ChainsAlgorithm.GetChains(jobPalette);
+
+            //------  get jobsScheduling  -------
+
+            decimal C_1;
+            decimal? Cmax1;
+            var jobsScheduling1 = ScheduleAlgorithm.BuildedSchedule(chains, mashines, AlgorithmType.A1, out C_1, out Cmax1);
+
+            decimal C_2;
+            decimal? Cmax2;
+            var jobsScheduling2 = ScheduleAlgorithm.BuildedSchedule(chains, mashines, AlgorithmType.A2, out C_2, out Cmax2);
+
+            decimal C_3;
+            decimal? Cmax3;
+            var jobsScheduling3 = ScheduleAlgorithm.BuildedSchedule(chains, mashines, AlgorithmType.A3, out C_3, out Cmax3);
+
+            decimal C_4;
+            decimal? Cmax4;
+            var jobsScheduling4 = ScheduleAlgorithm.BuildedSchedule(chains, mashines, AlgorithmType.A4, out C_4, out Cmax4);
+
+            //----- for result --------
+
+            var ChainResult = new decimal[tab.DurationByWork.GetLength(0)*tab.DurationByWork.GetLength(1), 2];
+            
+            var index = 0;
+            var chainNumber = 1;
+            foreach (var job in chains)
+            {
+                var jobNumber = 1;
+
+                foreach (var jobDuration in job)
+                {
+                    var currentJobNumber = chainNumber + "," + jobNumber;
+
+                    ChainResult[index, 0] = Convert.ToDecimal(currentJobNumber);
+                    ChainResult[index, 1] = decimal.Round(jobDuration,0);
+
+                    jobNumber++;
+                    index++;
+                }
+
+                chainNumber++;                
+            }
+
+            var plot1 = new Plot();
+            foreach(var val in jobsScheduling1)
+            {
+                plot1.Add(val.Key, val.Value);
+            }
+
+            var plot2 = new Plot();
+            foreach (var val in jobsScheduling2)
+            {
+                plot2.Add(val.Key, val.Value);
+            }
+
+            var plot3 = new Plot();
+            foreach (var val in jobsScheduling3)
+            {
+                plot3.Add(val.Key, val.Value);
+            }
+
+            var plot4 = new Plot();
+            foreach (var val in jobsScheduling4)
+            {
+                plot4.Add(val.Key, val.Value);
+            }
+
+            return new Result
+            {
+                Chain = ChainResult,
+
+                AlgorithSummaries = new AlgorithSummary[]
+                {
+                    new AlgorithSummary
+                    {
+                        Type = AlgorithmType.A1,
+                        Cstar = decimal.Round(C_1,2),
+                        Cmax = decimal.Round((decimal)Cmax1,2)
+                    },
+                    new AlgorithSummary
+                    {
+                        Type = AlgorithmType.A2,
+                        Cstar = decimal.Round(C_2,2),
+                        Cmax = decimal.Round((decimal)Cmax2,2)
+                    },
+                    new AlgorithSummary
+                    {
+                        Type = AlgorithmType.A3,
+                        Cstar = decimal.Round(C_3,2),
+                        Cmax = decimal.Round((decimal)Cmax3,2)
+                    },
+                    new AlgorithSummary
+                    {
+                        Type = AlgorithmType.A4,
+                        Cstar = decimal.Round(C_4,2),
+                        Cmax = decimal.Round((decimal)Cmax4,2)
+                    },
+                },   
+
+                PlotData = new Dictionary<AlgorithmType, Plot>
+                {
+                    {  AlgorithmType.A1,
+                       plot1
+                    },
+                    {  AlgorithmType.A2,
+                       plot2
+                    },
+                    {  AlgorithmType.A3,
+                       plot3
+                    },
+                    {  AlgorithmType.A4,
+                       plot4
+                    },
+                }                
+            };
+        }
+
+        public List<Mashine> GenerateInputMashines(decimal[] prod)
+        {
+            var mashines = new List<Mashine>();
+
+            for (int i = 0; i < prod.Length; i++)
+            {
+                mashines.Insert(i, new Mashine
+                {
+                    Number = i + 1,
+                    k = prod[i]
+                });
+            }
+
+            //for (int i = 0; i < mashinesNumber; i++)
             //{
-            //    Chain = new decimal[,] { { 1.2m, 5 }, { 2.2m, 4 }, { 3.2m, 8 }, { 4.2m, 8 }, { 5.2m, 5 }, { 6.2m, 5 }, { 6.2m, 5 }, { 6.2m, 5 }, { 6.2m, 5 } },
-            //    AlgorithSummaries = new AlgorithSummary[]
-            //        {
-            //             new AlgorithSummary
-            //             {
-            //                Type = AlgorithmType.A1,
-            //                Cstar = 4,
-            //                Cmax = 17
-            //             },
-            //             new AlgorithSummary
-            //             {
-            //                Type = AlgorithmType.A2,
-            //                Cstar = 7,
-            //                Cmax = 97
-            //             },
-            //             new AlgorithSummary
-            //             {
-            //                Type = AlgorithmType.A3,
-            //                Cstar = 6,
-            //                Cmax = 777
-            //             },
-            //             new AlgorithSummary
-            //             {
-            //                Type = AlgorithmType.A4,
-            //                Cstar = 66,
-            //                Cmax = 76
-            //             },
-            //        },
-            //    PlotData = new Dictionary<AlgorithmType, Plot>
-            //        {
-            //            { AlgorithmType.A1, new Plot
-            //                {
-            //                       { 6, new PlotRowPerDevice[]
-            //                        {
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 19.1m,
-            //                                Duration = 4,
-            //                                End = 7.7m
-            //                            },
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 20.1m,
-            //                                Duration = 5,
-            //                                End = 15.7m
-            //                            }
-            //                        }
-            //                    },
-            //                    { 5, new PlotRowPerDevice[]
-            //                        {
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 19.1m,
-            //                                Duration = 3,
-            //                                End = 4
-            //                            },
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 20.1m,
-            //                                Duration = 2,
-            //                                End = 9
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            },
-            //            { AlgorithmType.A2,  new Plot
-            //                {
-            //                       { 1, new PlotRowPerDevice[]
-            //                        {
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 2.1m,
-            //                                Duration = 2,
-            //                                End = 3
-            //                            },
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 1.1m,
-            //                                Duration = 13,
-            //                                End = 18
-            //                            }
-            //                        }
-            //                    },
-            //                    { 2, new PlotRowPerDevice[]
-            //                        {
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 5.1m,
-            //                                Duration = 2,
-            //                                End = 2
-            //                            },
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 6.1m,
-            //                                Duration = 4,
-            //                                End = 9
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            },{ AlgorithmType.A3,  new Plot
-            //                {
-            //                       { 3, new PlotRowPerDevice[]
-            //                        {
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 3.1m,
-            //                                Duration = 4,
-            //                                End = 8
-            //                            },
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 6.1m,
-            //                                Duration = 7,
-            //                                End = 18.5m
-            //                            }
-            //                        }
-            //                    },
-            //                    { 4, new PlotRowPerDevice[]
-            //                        {
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 5.1m,
-            //                                Duration = 2,
-            //                                End = 2.3m
-            //                            },
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 6.1m,
-            //                                Duration = 4,
-            //                                End = 9.7m
-            //                            }
-            //                        }
-            //                    },
-            //                    { 20, new PlotRowPerDevice[]
-            //                        {
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 5.1m,
-            //                                Duration = 2,
-            //                                End = 2.3m
-            //                            },
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 6.1m,
-            //                                Duration = 4,
-            //                                End = 9.7m
-            //                            }
-            //                        }
-            //                    },
-            //                    { 21, new PlotRowPerDevice[]
-            //                        {
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 5.1m,
-            //                                Duration = 2,
-            //                                End = 2.3m
-            //                            },
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 6.1m,
-            //                                Duration = 4,
-            //                                End = 9.7m
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            },{ AlgorithmType.A4,  new Plot
-            //                {
-            //                       { 8, new PlotRowPerDevice[]
-            //                        {
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork =15.1m,
-            //                                Duration = 9,
-            //                                End = 9
-            //                            },
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 16.1m,
-            //                                Duration = 4,
-            //                                End = 15
-            //                            }
-            //                        }
-            //                    },
-            //                    { 9, new PlotRowPerDevice[]
-            //                        {
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 12.1m,
-            //                                Duration = 1,
-            //                                End = 3
-            //                            },
-            //                            new PlotRowPerDevice
-            //                            {
-            //                                PalletWork = 13.1m,
-            //                                Duration = 3,
-            //                                End = 6
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //    }, 
-            //};
+            //    var randomNumber1 = random1.Next(1,5);
+            //    var randomNumber2 = random2.Next(0,9);
+
+            //    string number = randomNumber1 + "," + randomNumber2;
+
+            //    mashines.Insert(i, new Mashine
+            //    {
+            //        Number = i+1,
+            //        k = Convert.ToDecimal(number)
+            //    });
+            //}
+
+            return mashines;
         }
 
         private void SaveResult(Result calculatedResult, int tabId)

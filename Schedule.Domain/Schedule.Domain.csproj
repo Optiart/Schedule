@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\ChainsAlgorithm.cs" />
+    <Compile Include="Algorithms\ScheduleAlgorithm.cs" />
     <Compile Include="ITabService.cs" />
     <Compile Include="Models\AlgorithSummary.cs" />
     <Compile Include="Models\Enums\AlgorithmType.cs" />
