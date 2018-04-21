@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Schedule.Domain.Algorithms
 {
@@ -26,8 +27,6 @@ namespace Schedule.Domain.Algorithms
 
     public static class ScheduleAlgorithm
     {
-        static Random random;
-
         static List<List<Job>> _jobsSchedulingList;
 
         public static Dictionary<int, PlotRowPerDevice[]> BuildedSchedule(
@@ -37,7 +36,6 @@ namespace Schedule.Domain.Algorithms
             out decimal C_, 
             out decimal? Cmax)
         {
-            random = new Random();
             _jobsSchedulingList = new List<List<Job>>();
 
             //--------  initialize job, mashine and jobsSchedulingList   ----------
@@ -214,7 +212,7 @@ namespace Schedule.Domain.Algorithms
             }
             else
             {
-                trueMashine = allowMashines[random.Next(0, allowMashines.Count)];
+                trueMashine = allowMashines[GetRandomNumber(0, (byte)allowMashines.Count)];
             }
 
             return trueMashine;
@@ -305,6 +303,17 @@ namespace Schedule.Domain.Algorithms
             var C_ = С_List.Max();
 
             return C_;
+        }
+
+        static byte GetRandomNumber(byte minValue, byte maxValue)
+        {
+            byte[] bytes = new byte[1];
+            using (var randomProvider = new RNGCryptoServiceProvider())
+            {
+                randomProvider.GetBytes(bytes);
+            }
+
+            return (byte)((bytes[0] % (maxValue - minValue)) + minValue);
         }
     }
 }
