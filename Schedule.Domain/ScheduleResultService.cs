@@ -6,6 +6,7 @@ using Schedule.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Schedule.Domain
 {
@@ -57,8 +58,8 @@ namespace Schedule.Domain
 
             //----- for result --------
 
-            var ChainResult = new decimal[tab.DurationByWork.GetLength(0)*tab.DurationByWork.GetLength(1), 2];
-            
+            var ChainResult = new decimal[tab.DurationByWork.GetLength(0) * tab.DurationByWork.GetLength(1), 2];
+
             var index = 0;
             var chainNumber = 1;
             foreach (var job in chains)
@@ -70,17 +71,17 @@ namespace Schedule.Domain
                     var currentJobNumber = chainNumber + "," + jobNumber;
 
                     ChainResult[index, 0] = Convert.ToDecimal(currentJobNumber);
-                    ChainResult[index, 1] = decimal.Round(jobDuration,0);
+                    ChainResult[index, 1] = decimal.Round(jobDuration, 0);
 
                     jobNumber++;
                     index++;
                 }
 
-                chainNumber++;                
+                chainNumber++;
             }
 
             var plot1 = new Plot();
-            foreach(var val in jobsScheduling1)
+            foreach (var val in jobsScheduling1)
             {
                 plot1.Add(val.Key, val.Value);
             }
@@ -133,7 +134,7 @@ namespace Schedule.Domain
                         Cstar = decimal.Round(C_4,2),
                         Cmax = decimal.Round((decimal)Cmax4,2)
                     },
-                },   
+                },
 
                 PlotData = new Dictionary<AlgorithmType, Plot>
                 {
@@ -149,7 +150,7 @@ namespace Schedule.Domain
                     {  AlgorithmType.A4,
                        plot4
                     },
-                }                
+                }
             };
         }
 
@@ -165,7 +166,6 @@ namespace Schedule.Domain
                     k = prod[i]
                 });
             }
-
             //for (int i = 0; i < mashinesNumber; i++)
             //{
             //    var randomNumber1 = random1.Next(1,5);

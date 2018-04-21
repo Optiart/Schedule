@@ -20,11 +20,6 @@ namespace Schedule.Models
 
         public Dictionary<int, string> ColorByPalleteWork { get; private set; }
 
-        public Dictionary<AlgorithmType, decimal> MaxDurationByAlgorithmType =>
-            PlotData.ToDictionary(
-                data => data.Key,
-                data => data.Value.Max(kvp => kvp.Value.Max(g => g.End)));
-
         public ResultViewModel()
         {
             DefineColors();

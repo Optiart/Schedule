@@ -32,7 +32,8 @@
 
     <div class="tab-section">
             @RenderBody()
-            </div>
+            @RenderSection("buttons", required: false)
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

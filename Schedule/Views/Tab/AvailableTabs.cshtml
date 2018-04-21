@@ -18,69 +18,84 @@ else
             @foreach (var tab in Model)
             {
                 <li id="nav-item-@tab.Id" class="nav-item">
-                    <a id="tab-@tab.Id" href="#" class="tab nav-link @(index == 1 ? "tab-active nav-link-active" : string.Empty)">Вкладка №@(index++)</a>
+                    <a id="tab-@tab.Id" href="#" class="tab nav-link @(index++ == 1 ? "tab-active nav-link-active" : string.Empty)">Дані Id:@(tab.Id)</a>
                 </li>
             }
         </ul>
     </div>
 
-    foreach (var tab in Model)
-    {
-        <div id="div-tab-@tab.Id" class="@(firstTab ? string.Empty :"disable")">
-            @{ firstTab = false; }
-            <div class="tab-devices">
-                <h4>Пристрої</h4>
-                <div class="form-group row">
-                    @Html.LabelFor(m => tab.NumberOfDevices, "Кількість", new { @class = "col-sm-4 col-form-label" })
-                    @Html.DisplayFor(m => tab.NumberOfDevices, new { @class = "form-control" })
-                </div>
-                <div class="form-check form-check-inline">
-                    Тип: @Html.DisplayFor(m => tab.DeviceType, "Identical", new { @class = "form-check-input" })
+    <div class="block" style="margin-top: 15px;">
+        @foreach (var tab in Model)
+        {
+            <div id="div-tab-@tab.Id" class="@(firstTab ? string.Empty :"disable")">
+                @{ firstTab = false; }
+                <div class="tab-devices">
+                    <h4>Пристрої</h4>
+
+                    <div>Кількість:</div>
+                    <div>@tab.NumberOfDevices</div>
+                    <div class="block">Тип: @(tab.DeviceType == DeviceType.Identical ? "Ідентичний" : "Неідентичний")</div>
+
+                    <div class="tab-devices-table">
+                        <table>
+                            <tr class="schedule-table-header">
+                                <td width="100px" height="40px">Пристрій</td>
+                                <td width="100px" height="40px">Продуктивність</td>
+                            </tr>
+                            @for (int i = 0; i < tab.DeviceProductivities.Length; i++)
+                            {
+                                <tr class="schedule-table-header-row">
+                                    <td>@(i + 1)</td>
+                                    <td>@tab.DeviceProductivities[i]</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
                 </div>
 
-                @for (int i = 0; i < tab.DeviceProductivities.Length; i++)
-                {
+                <div class="tab-devices">
+                    <h4>Палета</h4>
                     <div class="block">
-                        Пристрій @(i + 1): @tab.DeviceProductivities[i]
+                        <div>Кількість рядів:</div>
+                        <div>@tab.NumberOfPalleteRows</div>
                     </div>
-                }
-            </div>
-
-            <div class="tab-devices">
-                <h4>Палета</h4>
-                <div class="form-group row">
-                    @Html.LabelFor(m => tab.NumberOfPalleteRows, "Кількість рядів:", new { @class = "col-sm-7 col-form-label" })
-                    <div class="col-sm-2">
-                        @Html.DisplayFor(m => tab.NumberOfPalleteRows, new { @class = "form-control" })
+                    <div class="block">
+                        <div>Кількість робіт у ряді:</div>
+                        <div>@tab.NumberOfWorkPerRow</div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => tab.NumberOfWorkPerRow, "Кількість робіт у ряді:", new { @class = "col-sm-7 col-form-label" })
-                    <div class="col-sm-2">
-                        @Html.DisplayFor(m => tab.NumberOfWorkPerRow, new { @class = "form-control" })
-                    </div>
-                </div>
 
-                @{
-                    int workIndex;
-                }
-
-                @for (int i = 0; i < tab.NumberOfPalleteRows; i++)
-                {
-                    { workIndex = 1; };
-                    for (int j = 0; j < tab.NumberOfWorkPerRow; j++)
-                    {
-                        <div class="block">
-                            Палета @(i + 1).@(workIndex++): @tab.DurationByWork[i, j]
-                        </div>
+                    @{
+                        int workIndex;
                     }
-                }
+
+                    <div class="tab-devices-table">
+                        <table>
+                            <tr class="schedule-table-header">
+                                <td width="100px" height="40px">Робота</td>
+                                <td width="100px" height="40px">Тривалість</td>
+                            </tr>
+                            @for (int i = 0; i < tab.NumberOfPalleteRows; i++)
+                            {
+                                { workIndex = 1; };
+                                for (int j = 0; j < tab.NumberOfWorkPerRow; j++)
+                                {
+                                    <tr class="schedule-table-header-row">
+                                        <td>@(i + 1).@(workIndex++)</td>
+                                        <td>@tab.DurationByWork[i, j]</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+
+                </div>
+                <div class="control-buttons">
+                    <div class="block"><button type="button" class="btn-delete-tab btn btn-danger control-button" onclick="deleteTab('@(Url.HttpRouteUrl("DeleteTabRoute", routeValues: new { id = tab.Id }))', @tab.Id)">Видалити</button></div>
+                    <div class="block"><button type="button" class="btn-delete-tab btn btn-success control-button-low" onclick="redirectToResult('@(Url.Action("AvailableResults", "Result", routeValues: new { tabId = tab.Id }))')">Результати</button></div>
+                </div>
             </div>
-            <div class="block" style="text-align: center; margin-top: 40px">
-                <button type="button" class="btn-delete-tab btn btn-danger" onclick="deleteTab('@(Url.HttpRouteUrl("DeleteTabRoute", routeValues: new { id = tab.Id }))', @tab.Id)">Видалити</button>
-            </div>
-        </div>
-    }
+        }
+    </div>
 }
 
 @section scripts
@@ -109,6 +124,10 @@ else
                     $("#result-message").addClass("alert").addClass("alert-danger");
                     $("#result-message").html("Сталася помилка при видаленні даних: " + content.statusText);
                 });
+        }
+
+        function redirectToResult(url) {
+            window.location.href = url;
         }
 
     </script>

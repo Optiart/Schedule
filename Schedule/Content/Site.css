@@ -70,8 +70,21 @@ form {
     width: 350px;
 }
 
-/*key value form*/
+    .tab-devices .tab-devices-table {
+        margin-top: 12px;
+        display: block;
+        height: 250px;
+        overflow-y: auto;
+    }
 
+        .tab-devices .tab-devices-table > table {
+            border: 1px solid #000000;
+        }
+
+.tab-active {
+    font-weight: bold;
+}
+/*key value form*/
 .key-value-section {
     margin-top: 20px;
     width: 300px;
@@ -130,7 +143,20 @@ form {
     text-align: center;
 }
 
-/* Graph */
+.control-buttons {
+    margin-left: 200px
+}
+
+.control-button,
+.control-button-low {
+    width: 150px;
+}
+
+.control-button-low {
+    margin-top: 15px
+}
+
+/* Plot */
 
 .plot-grid {
     width: 1110px;
@@ -141,7 +167,7 @@ form {
         display: block;
         overflow-y: scroll;
         overflow-x: scroll;
-        height: 170px;
+        height: 300px;
     }
 
     .plot-grid .plot-name {
@@ -179,21 +205,20 @@ form {
             padding-left: 50px;
         }
 
-    .plot-grid .chain .chain-header > td,
-    .plot-grid .algorithm-legend-header > td {
-        border: 1px solid #000000;
-        text-align: center;
-    }
+.schedule-table-header > td {
+    border: 1px solid #000000;
+    text-align: center;
+}
 
-    .plot-grid .chain .chain-data-row > td,
-    .plot-grid .algorithm-legend-row > td {
-        text-align: center;
-    }
+.schedule-table-header-row > td {
+    text-align: center;
+}
 
 .plot {
     display: block;
     width: 100%;
     white-space: nowrap;
+    position: relative;
 }
 
     .plot .device-id {
@@ -206,6 +231,22 @@ form {
 
     .plot .device-work {
         display: block;
+    }
+
+    .plot .plot-projection-C,
+    .plot .plot-projection {
+        position: absolute;
+        border: 0;
+    }
+
+        .plot .plot-projection-C > span {
+            font-size: 14px;
+            font-weight: bold
+        }
+
+    .plot .plot-projection {
+        background-image: url('../../Images/vertical-dash.png');
+        background-repeat: repeat-y;
     }
 
     .plot .x-data {

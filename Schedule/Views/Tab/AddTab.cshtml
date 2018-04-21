@@ -39,10 +39,10 @@
         </div>
         @{ Html.RenderPartial("_KeyValueForm", FormType.Pallete); }
     </div>
-
-    <div style="display: block; padding-top:15px; padding-left:200px;">
-        <button id="btn-clear" type="button" class="btn btn-outline-success">Очистити</button>
-        <button id="form-schedule-submit" type="submit" class="btn btn-success" style="margin-left:30px;">Розрахувати</button>
+    <div class="control-buttons">
+        <div class="block"><button id="btn-clear" type="button" class="btn btn-outline-success control-button">Очистити</button></div>
+        <div class="block"><button id="form-schedule-submit" type="submit" class="btn btn-success control-button-low">Розрахувати</button></div>
+        <div class="block"><button id="btn-generate" type="button" class="btn btn-warning control-button-low">Автозаповнення</button></div>
     </div>
 </form>
 
@@ -51,14 +51,19 @@
     <script type="text/javascript">
     $(activateNavLink('nav-addTab'));
 
+    function renderPallets() {
+        var numberOfPalletes = $("#NumberOfPalleteRows").val();
+        var numberOfWork = $("#NumberOfWorkPerRow").val();
+        renderPalleteRows(numberOfPalletes, numberOfWork);
+    }
+
         (function () {
-            var numberOfPalletes = $("#NumberOfPalleteRows").val();
-            var numberOfWork = $("#NumberOfWorkPerRow").val();
-            renderPalleteRows(numberOfPalletes, numberOfWork);
+            renderPallets();
         })();
 
     $("#non-identical").click(function () {
         $("#@FormType.Device").removeClass("disable");
+        renderReviceProductivities();
     });
 
     $("#identical").click(function () {
@@ -67,12 +72,16 @@
 
     var deviceCount = 0;
     $("#NumberOfDevices").bind("keyup click", function () {
-        var val = $("#NumberOfDevices").val();
-        if (deviceCount !== val) {
-            deviceCount = val;
-            renderDeviceRows(deviceCount);
-        }
+        renderReviceProductivities();
     });
+
+        function renderReviceProductivities() {
+            var val = $("#NumberOfDevices").val();
+            if (deviceCount !== val) {
+                deviceCount = val;
+                renderDeviceRows(deviceCount);
+            }
+        }
 
     var previousPalleteCount = 0;
     var previousWorkCount = 0;
@@ -200,6 +209,10 @@
             $("#Device-fields input[type=text]").each(function () {
                 scheduleForm.DeviceProductivities.push(this.value);
             })
+        } else {
+            for (var i = 0; i < scheduleForm.NumberOfDevices; i++) {
+                scheduleForm.DeviceProductivities.push(1);
+            }
         }
 
         scheduleForm.NumberOfPalleteRows = $("#NumberOfPalleteRows").val();
@@ -212,10 +225,8 @@
                 for (var col = 0; col < scheduleForm.NumberOfWorkPerRow; col++) {
                     var id = `#DurationByWork${row}${col}`;
                     scheduleForm.DurationByWork[row][col] = $(id).val();
-                    console.log(scheduleForm.DurationByWork);
                 }
             }
-
         }
 
         post(
@@ -245,12 +256,44 @@
         $('input[name=DeviceType]')[0].checked = true;
         $("#Device-fields").empty();
         $("#Pallete-fields").empty();
+        renderPallets();
     }
 
     $("#btn-clear").click(function () {
         clearForm();
         $("#result-message").addClass("disable");
     });
+
+        $("#btn-generate").click(function () {
+            var deviceCount = getRandomValue(2, 9);
+            $("#NumberOfDevices").val(deviceCount);
+            renderReviceProductivities();
+
+            if ($('input[name=DeviceType]')[0].checked) {
+            } else {
+                $("#Device-fields input[type=text]").each(function () {
+                    this.value = getRandomValue(1, 4) + getRandomValue(1, 9) / 10;
+                })
+            }
+
+            numberOfPalletes = getRandomValue(Math.floor(deviceCount / 2) + 1, 5);
+            numberOfWork = getRandomValue(2, 19);
+            $("#NumberOfPalleteRows").val(numberOfPalletes);
+            $("#NumberOfWorkPerRow").val(numberOfWork);
+
+            renderPalleteRows(numberOfPalletes, numberOfWork);
+
+            for (var row = 0; row < numberOfPalletes; row++) {
+                for (var col = 0; col < numberOfWork; col++) {
+                    var id = `#DurationByWork${row}${col}`;
+                    $(id).val(getRandomValue(1, 9));
+                }
+            }
+        });
+
+        function getRandomValue(min, max) {
+            return Math.floor(Math.random() * max) + min;
+        }
 
     </script>
 }

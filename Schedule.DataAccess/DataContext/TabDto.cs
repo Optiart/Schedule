@@ -23,7 +23,6 @@ namespace Schedule.DataAccess
         [Column("device_type")]
         public byte DeviceType { get; set; }
 
-        [StringLength(2048)]
         [Column("productivity")]
         public string Productivity { get; set; }
 
@@ -33,7 +32,6 @@ namespace Schedule.DataAccess
         [Column("number_of_work")]
         public int NumberOfWork { get; set; }
 
-        [StringLength(2048)]
         [Column("work_per_pallete")]
         public string WorkPerPallete { get; set; }
 

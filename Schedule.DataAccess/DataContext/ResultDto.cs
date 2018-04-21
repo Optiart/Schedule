@@ -14,12 +14,10 @@ namespace Schedule.DataAccess
         public int TabId { get; set; }
 
         [Required]
-        [StringLength(5096)]
         [Column("result")]
         public string Result { get; set; }
 
         [Column("chain")]
-        [StringLength(1024)]
         public string Chain { get; set; }
 
         public virtual TabDto Tabs { get; set; }

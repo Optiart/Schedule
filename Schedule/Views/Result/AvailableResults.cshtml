@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Результати";
-    int index = 1;
 }
 
 @if (Model == null)
@@ -17,10 +16,11 @@ else
             {
                 <li id="nav-item-@tabId" class="nav-item">
                     @Html.ActionLink(
-                        "Вкладка №" + index++,
-                        "AvailableResults",
-                        new { tabId = tabId },
-                        new { @class = string.Format("{0} {1}", "tab-active ", tabId == Model.CurrentTab ? "nav-link-active" : string.Empty) })
+                                  "Дані Id:" + tabId,
+                                  "AvailableResults",
+                                  new { tabId = tabId },
+                                  new { @class = string.Format("tab nav-link {0}", 
+                                       Model.CurrentTab == tabId ? "tab-active nav-link-active" : string.Empty) })
                 </li>
             }
         </ul>
@@ -29,14 +29,14 @@ else
     <div class="plot-grid">
         <div class="chain">
             <table>
-                <tr class="chain-header">
+                <tr class="schedule-table-header">
                     <td width="100px" height="40px">Робота</td>
                     <td width="100px" height="40px">Тривалість</td>
                 </tr>
                 @{ int rows = Model.Chain.GetLength(0); }
                 @for (int i = 0; i < rows; i++)
                 {
-                    <tr class="chain-data-row">
+                    <tr class="schedule-table-header-row">
                         <td>@Model.Chain[i, 0]</td>
                         <td>@Model.Chain[i, 1]</td>
                     </tr>
@@ -45,14 +45,14 @@ else
         </div>
         <div class="algorithm-legend">
             <table>
-                <tr class="algorithm-legend-header">
+                <tr class="schedule-table-header">
                     <td width="120px" height="40px">Алгоритм</td>
                     <td width="60px" height="40px">C<sup>*</sup></td>
                     <td width="60px" height="40px">C<sub>max</sub></td>
 
                     @foreach (var summary in Model.AlgorithSummaries)
                     {
-                    <tr class="algorithm-legend-row">
+                    <tr class="schedule-table-header-row">
                         <td>@summary.Type</td>
                         <td>@summary.Cstar</td>
                         <td>@summary.Cmax</td>
@@ -103,12 +103,20 @@ else
     {
         <div class="plot">
             @{
-                int widthBlockPx = 4;
+                int widthBlockPx = 3;
                 int epsilon = 10;
                 int currentDevice = Model.PlotData[type].Count;
                 decimal lastWorkEnd = 0;
+                decimal Cstar = Model.AlgorithSummaries.Select(a => a.Cstar).First();
             }
-            <div class="y-arrow">&#x21FE;</div>
+
+            <div style="position:relative; top: 20px; left: @((int)(Cstar * widthBlockPx * epsilon) + 23)px; border: 0;">
+                <div class="plot-projection" style="height: @(currentDevice * 33 + 18)px;">&nbsp;</div>
+                <div class="plot-projection-C" style="left:-2px; top: @(currentDevice * 33 + 40)px;">
+                    <span>C<sup>*</sup> = @Cstar</span>
+                </div>
+            </div>
+
             @foreach (var kvp in Model.PlotData[type])
             {
                 <div class="device-work">
@@ -126,16 +134,23 @@ else
                             }
 
                             string width = ((int)(row.Duration * epsilon) * widthBlockPx).ToString() + "px";
-                            string color = Model.ColorByPalleteWork[(int)row.PalletWork];
+                            Model.ColorByPalleteWork.TryGetValue((int)row.PalletWork, out string color);
+                            color = color ?? "#FF00CC";
                             <div data-toggle="tooltip" title="@row.End" style="cursor:pointer; width: @width; background-color: @color">@row.PalletWork / @row.Duration</div>
                             {
                                 rowGapIndex = (int)(row.End * epsilon);
                                 lastWorkEnd = row.End;
                             }
                         }
+
                         <div style="position:relative; left: -1px; border: 0;">
-                            <div style="position:absolute; border: 0;height: @(currentDevice * 33 + 16)px; background-image: url('../../Images/vertical-dash.png'); background-repeat:repeat-y">&nbsp;</div>
-                            <div style="position:absolute; border: 0; left:-2px; top: @(currentDevice * 33 + 35)px;">C = @lastWorkEnd</div>
+                            <div class="plot-projection" style="height: @(currentDevice * 33 + 16)px;">&nbsp;</div>
+                            <div class="plot-projection-C" style="left:-2px; top: @(currentDevice * 33 + 35)px;">
+                                @if (kvp.Value.Length > 0)
+                                {
+                                    <text>C = @lastWorkEnd</text>
+                                }
+                            </div>
                             @{ currentDevice--; }
                         </div>
                     </div>
@@ -144,7 +159,8 @@ else
             }
             <div class="y-margin"></div><div class="y-margin"></div>
             <div class="x">
-                @for (int i = 0; i <= Model.MaxDurationByAlgorithmType[type]; i++)
+                @{ decimal Cmax = Model.AlgorithSummaries.Where(a => a.Type == type).Select(a => a.Cmax).FirstOrDefault(); }
+                @for (int i = 0; i <= (int)Cmax; i++)
                 {
                     <div style="position:relative; width:@(widthBlockPx * epsilon)px; left:-1px">
                         <div style="font-size:14px; border: none; position:absolute; top:-10px;">|</div>
