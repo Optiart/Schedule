@@ -104,7 +104,6 @@ form {
 
 .key-value-section-header-col {
     display: inline-block;
-    width: 60px;
     margin-left: 15px;
 }
 
@@ -118,7 +117,7 @@ form {
     .key-value-div input[type="text"] {
         height: 35px;
         width: 70px;
-        margin-left: 5px;
+        margin-left: 30px;
         border-radius: 5px;
         outline: none;
         border: 1px solid #000000;

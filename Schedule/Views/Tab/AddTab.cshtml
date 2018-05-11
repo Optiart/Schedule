@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="form-group row">
-            @Html.LabelFor(m => m.NumberOfWorkPerRow, "Кількість робіт у ряді:", new { @class = "col-sm-7 col-form-label" })
+            @Html.LabelFor(m => m.NumberOfWorkPerRow, "Кількість об'єктів у ряді:", new { @class = "col-sm-7 col-form-label" })
             <div class="col-sm-2">
                 @Html.TextBoxFor(m => m.NumberOfWorkPerRow, new { @class = "form-control", type = "number", min = 2, max = 20, Value = 2, onKeyDown = "filterInteger(this)", onKeyUp = "filterMaxValue(this, 20)", onfocusout = "filterMin(this, 2)" })
             </div>

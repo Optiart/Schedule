@@ -1,8 +1,8 @@
 ﻿@model FormType
 
 @{
-    string key = Model == FormType.Device ? "Пристрій" : "Робота";
-    string value = Model == FormType.Device ? "Прод" : "Час";
+    string key = Model == FormType.Device ? "Пристрій" : "Об'єкт";
+    string value = Model == FormType.Device ? "Продуктивність" : "Час на виконання";
 }
 
 <div id="@Model" class="key-value-section @(Model == FormType.Device ? "disable" : "")">
