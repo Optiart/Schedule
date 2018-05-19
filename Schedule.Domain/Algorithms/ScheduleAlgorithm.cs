@@ -313,9 +313,9 @@ namespace Schedule.Domain.Algorithms
 
             var jobChainsOrder = jobChains.OrderByDescending(x => x.Select(y => y.p).Sum()).Select(x => x.Select(e => e.p).Sum()).ToList();
 
-            var С_List = new decimal[mashines.Count + 1];
+            var С_List = new decimal[mashines.Count];
 
-            for (int i = 0; i < mashines.Count; i++)
+            for (int i = 0; i < mashines.Count-1; i++)
             {
                 С_List[i] = mashinesOrder[i] * jobChainsOrder[i];
             }
@@ -331,7 +331,7 @@ namespace Schedule.Domain.Algorithms
                         tmp += (1 / (mashine.k * job.p));
                     }
 
-                    С_List[mashines.Count] += (1 / tmp);
+                    С_List[mashines.Count-1] += (1 / tmp);
                 }
             }
 
