@@ -135,6 +135,8 @@ namespace Schedule.Domain.Algorithms
                 rightChain.Add(jobPalette[jobPaletteRow, q]);
             }
 
+            leftChain.Reverse();
+
             jobChain.Add(leftChain);
             jobChain.Add(rightChain);
         }

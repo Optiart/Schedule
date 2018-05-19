@@ -5,6 +5,7 @@ using Schedule.Domain.Models;
 using Schedule.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -64,16 +65,15 @@ namespace Schedule.Domain
             var chainNumber = 1;
             foreach (var job in chains)
             {
-                var jobNumber = 1;
+                decimal currentNum = chainNumber;
 
                 foreach (var jobDuration in job)
                 {
-                    var currentJobNumber = chainNumber + "," + jobNumber;
+                    currentNum += .1m;
 
-                    ChainResult[index, 0] = Convert.ToDecimal(currentJobNumber);
+                    ChainResult[index, 0] = currentNum;
                     ChainResult[index, 1] = decimal.Round(jobDuration, 0);
 
-                    jobNumber++;
                     index++;
                 }
 

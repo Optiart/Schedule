@@ -87,6 +87,15 @@ namespace Schedule.Domain.Algorithms
 
             C_ = DoAlgorythm(jobChains, mashines, algorythmType);
 
+            if(C_ - decimal.Round(C_,0) > 0)
+            {
+                C_ = decimal.Round(C_, 0) + 1;
+            }
+            else
+            {
+                decimal.Round(C_, 0);
+            }
+
             var maxList = _jobsSchedulingList.Select(x => x.OrderByDescending(y => y.C).Select(y => y.C).FirstOrDefault()).ToList();
             Cmax = maxList.Max();
 
@@ -129,7 +138,7 @@ namespace Schedule.Domain.Algorithms
                 {
                     var job = new PlotRowPerDevice
                     {
-                        PalletWork = Convert.ToDecimal(mashineList[i].Number),
+                        PalletWork = Convert.ToDecimal(mashineList[i].Number.Replace(',','.')),
                         Duration = mashineList[i].p * mashines[count - 1].k,
                         End = (decimal)mashineList[i].C
                     };
