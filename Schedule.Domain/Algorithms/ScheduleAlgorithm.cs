@@ -1,6 +1,7 @@
 ﻿using Schedule.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -138,7 +139,7 @@ namespace Schedule.Domain.Algorithms
                 {
                     var job = new PlotRowPerDevice
                     {
-                        PalletWork = Convert.ToDecimal(mashineList[i].Number.Replace(',','.')),
+                        PalletWork = Convert.ToDecimal(mashineList[i].Number.Replace(',','.'), CultureInfo.InvariantCulture),
                         Duration = mashineList[i].p * mashines[count - 1].k,
                         End = (decimal)mashineList[i].C
                     };
